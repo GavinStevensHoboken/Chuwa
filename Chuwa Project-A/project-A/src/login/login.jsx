@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import './App.css'
+import {useState} from 'react'
+import './login.css'
 
-function App() {
-  const [setEmail] = useState('');
-  const [setPassword] = useState('');
-  const [passwordShown, setPasswordShown] = useState(false);
+function Login() {
+    const [,setEmail] = useState('');
+    const [,setPassword] = useState('');
+    const [passwordShown, setPasswordShown] = useState(false);
 
   const toggleVisibility = () => {
     setPasswordShown(!passwordShown);
@@ -43,4 +43,4 @@ function App() {
   )
 }
 
-export default App
+export default Login;

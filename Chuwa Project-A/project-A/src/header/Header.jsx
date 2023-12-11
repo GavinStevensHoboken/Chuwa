@@ -22,7 +22,7 @@ function Header() {
                 </button>
             </form>
             <nav>
-            <a href="/signin">Sign In</a>
+            <a href="/login">Sign In</a>
             <a href="/cart">Cart</a>
             </nav>
         </header>

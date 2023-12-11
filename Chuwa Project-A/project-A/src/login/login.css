@@ -12,8 +12,6 @@
   min-width: 400px; 
   max-width: 600px; 
   min-height: 400px;
-  margin-top: 22.5%; 
-  margin-bottom: 22.5%;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background: white;
@@ -89,38 +87,12 @@
   text-decoration: none;
 }
 
-@media (max-width: 400px) {
-  .login-form {
-    width: 100%; 
-    min-width: 300px; 
-  }
-
-  .password-container input {
-    padding-right: 40px;
-  }
-
-  .password-container button {
-    right: 0;
-  }
-}
-
 @media (max-height: 800px) {
-  .login-container{
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
-  }
+
 
   .login-form {
-    width: 60%; 
     min-height: 250px;
-    margin-top: 22.5%; 
-    margin-bottom: 22.5%;
     padding: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background: white;
-    border-radius: 8px;
   }
 
   .login-form h1 {
@@ -131,57 +103,20 @@
   }
 
   .login-form label {
-    display: block;
     margin-bottom: 0px;
     font-size: 15px;
   }
   
   .login-form input {
-    width: 94%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .password-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-  }
-  
-  .password-container input {
-    flex-grow: 1;
-  }
-  
-  .password-container button {
-    right: 0;
-    padding: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #5c67f2;
-    cursor: pointer;
-    position: absolute;
   }
 
   .sign-in-button {
     width: 98%;
-    padding: 15px;
-    background-color: #5c67f2;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
   }
 
   .options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
     margin-top: 5px;
   }
 }

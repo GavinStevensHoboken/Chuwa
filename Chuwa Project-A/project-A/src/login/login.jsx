@@ -20,6 +20,7 @@ function Login() {
             <input 
               type="email" 
               id="email" 
+              name="email"
               onChange={e => setEmail(e.target.value)} 
               required/>
             <div className="password-container">
@@ -27,7 +28,8 @@ function Login() {
               <input
                 type={passwordShown ? "text" : "password"}
                 id="password"
-                onChange={p => setPassword(p.target.value)}
+                name="password"
+                onChange={e => setPassword(e.target.value)}
                 required></input>
               <button type="button" onClick={toggleVisibility}>Show</button>
             </div>

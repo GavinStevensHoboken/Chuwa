@@ -11,8 +11,6 @@
     min-width: 400px; 
     max-width: 600px; 
     min-height: 400px;
-    margin-top: 22.5%; 
-    margin-bottom: 22.5%;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: white;
@@ -88,99 +86,33 @@
     text-decoration: none;
 }
   
-@media (max-width: 400px) {
-  .sign-up-form {
-      width: 100%; 
-      min-width: 300px; 
-  }
-  
-  .sign-up-password-container input {
-      padding-right: 40px;
-  }
-  
-  .sign-up-password-container button {
-      right: 0;
-  }
-}
-  
 @media (max-height: 800px) {
-  .sign-up-container{
-      display: flex; 
-      flex-direction: column; 
-      justify-content: center; 
-      align-items: center; 
-  }
-  
   .sign-up-form {
-      width: 60%; 
       min-height: 250px;
-      margin-top: 22.5%; 
-      margin-bottom: 22.5%;
       padding: 4px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      background: white;
-      border-radius: 8px;
   }
   
   .sign-up-form h1 {
-      text-align: center;
       margin-bottom: 0px;
       padding-bottom: 0px;
       font-size: 25px;
   }
   
   .sign-up-form label {
-      display: block;
       margin-bottom: 0px;
       font-size: 15px;
   }
     
   .sign-up-form input {
-      width: 94%;
       padding: 10px;
       margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-  }
-    
-  .sign-up-password-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-  }
-    
-  .sign-up-password-container input {
-      flex-grow: 1;
-  }
-    
-  .sign-up-password-container button {
-      right: 0;
-      padding: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: #5c67f2;
-      cursor: pointer;
-      position: absolute;
   }
   
   .sign-up-button {
       width: 98%;
-      padding: 15px;
-      background-color: #5c67f2;
-      border: none;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
   }
   
   .sign-up-options {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
       margin-top: 5px;
   }
 }

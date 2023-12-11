@@ -2,10 +2,9 @@ footer {
     background-color: #282c34; 
     color: #fff; 
     text-align: center; 
-    padding: 10px 0; 
-    position: absolute; 
-    bottom: 0;
-    width: 100%; 
+    padding: 10px 0px; 
+    position: relative; 
+    width: 100%;
 }
   
 footer a {
@@ -17,4 +16,5 @@ footer a {
 footer a:hover {
     text-decoration: underline; 
 }
+
   

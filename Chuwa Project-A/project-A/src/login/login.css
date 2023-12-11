@@ -4,6 +4,7 @@
   justify-content: center; 
   align-items: center; 
   height: 100vh; 
+
 }
 
 .login-form {
@@ -12,7 +13,7 @@
   max-width: 600px; 
   min-height: 400px;
   margin-top: 22.5%; 
-  margin-bottom: 32.5%;
+  margin-bottom: 22.5%;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background: white;
@@ -115,7 +116,7 @@
     width: 60%; 
     min-height: 250px;
     margin-top: 22.5%; 
-    margin-bottom: 32.5%;
+    margin-bottom: 22.5%;
     padding: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: white;

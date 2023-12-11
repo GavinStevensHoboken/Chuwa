@@ -4,38 +4,31 @@ import './Sign up.css'
 function SignUp() {
   const [setEmail] = useState('');
   const [setPassword] = useState('');
-  const [passwordShown, setPasswordShown] = useState(false);
-
-  const toggleVisibility = () => {
-    setPasswordShown(!passwordShown);
-  }
-
+  
   return (
     <>
-      <div className="login-container">
-        <div className="login-form">
-          <h1>Sign in to your account</h1>
-          <form action="/login" method="POST" >
+      <div className="sign-up-container">
+        <div className="sign-up-form">
+          <h1>Sign up an account</h1>
+          <form action="/creatUser" method="POST" >
             <label htmlFor="email">Email</label>
             <input 
               type="email" 
               id="email" 
               onChange={e => setEmail(e.target.value)} 
               required/>
-            <div className="password-container">
+            <div className="sign-up-password-container">
               <label htmlFor="password">Password</label>
               <input
-                type={passwordShown ? "text" : "password"}
+                type="text"
                 id="password"
                 onChange={p => setPassword(p.target.value)}
                 required></input>
-              <button type="button" onClick={toggleVisibility}>Show</button>
             </div>
-            <button type="sumbit" className="sign-in-button">Sign In</button>
+            <button type="sumbit" className="sign-up-button">Create account</button>
           </form>
-          <div className="options">
-              <p>Don&apos;t have an account?<a href="/signup">Sign Up</a></p>
-              <a href="/resetPassword">Forget password?</a>
+          <div className="sign-up-options">
+              <p>Already have an account?<a href="/login">Sign in</a></p>
             </div>
         </div>
       </div>

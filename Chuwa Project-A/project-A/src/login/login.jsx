@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../auth/authActions';
 import './login.css'
 
 function Login() {
@@ -7,6 +9,8 @@ function Login() {
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [passwordShown, setPasswordShown] = useState(false);
+  const dispatch = useDispatch();
+  
 
   useEffect(() => {
     console.log("Component did mount");
@@ -30,6 +34,7 @@ function Login() {
       const data = await response.json();
       const token = data.token;
       document.cookie = "token=" + token + ";path=/";
+      dispatch(loginAction());
       navigate('/main'); 
     } else {
       alert('Login Failed')

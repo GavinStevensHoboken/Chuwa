@@ -45,8 +45,22 @@ header nav a {
     padding: 0px 10px; 
     margin-left: 5px; 
 }
+
+header nav button {
+    color: white; 
+    text-decoration: none; 
+    background-color: #282c34;
+    border: none;
+    cursor: pointer;
+    padding: 0px 10px; 
+    margin-left: 5px; 
+}
   
 header nav a:hover {
+    text-decoration: underline; 
+}
+
+header nav button:hover {
     text-decoration: underline; 
 }
 

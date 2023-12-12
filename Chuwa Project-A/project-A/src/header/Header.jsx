@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Header.css';
 
 
@@ -22,8 +22,8 @@ function Header() {
                 </button>
             </form>
             <nav>
-            <a href="/login">Sign In</a>
-            <a href="/cart">Cart</a>
+                <a href="/login">Sign In</a>
+                <a href="/cart">Cart</a>
             </nav>
         </header>
     );

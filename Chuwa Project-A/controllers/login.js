@@ -2,11 +2,10 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 require('dotenv').config;
 
-const login = async (req, res) => {
+const Login = async (req, res) => {
     try{
         const { email, password } = {...req.body};
         const user = await User.findOne({email: email})
-        // Todos: Modify to reload the login page
         if(!user || user.password !== password){
             res.status(401).json({message: 'Invalid Credentials'})
         }else{
@@ -29,3 +28,5 @@ const login = async (req, res) => {
         res.status(500).json({message: 'Server Error'});
     }
 }
+
+module.exports = Login;

@@ -26,14 +26,22 @@
 .sign-up-form label {
     display: block;
     margin-bottom: 5px;
+    margin-top: 15px;
 }
   
 .sign-up-form input {
     width: 94%;
     padding: 15px;
-    margin-bottom: 15px;
+    
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    margin-bottom: 15px;
 }
   
 .sign-up-password-container {
@@ -67,6 +75,7 @@
     color: white;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 20px;
 }
   
 .sign-up-options {

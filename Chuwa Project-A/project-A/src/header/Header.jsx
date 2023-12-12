@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutAction } from '../auth/authActions';
 import './Header.css';
@@ -12,7 +12,7 @@ function Header() {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const dispatch = useDispatch();
     
-    const handleSignOut = () => {
+    const handleSign = () => {
         if (isLoggedIn) {
             document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
             dispatch(logoutAction());
@@ -37,13 +37,9 @@ function Header() {
                     </button>
                 </form>
                 <nav>
-                    {isLoggedIn ? (
-                        <button onClick={handleSignOut}>Sign Out</button>
-                    ):(
-                        // <a href="/login">Sign In</a>
-                        <button onClick={handleSignOut}>Sign in</button>
-                    )
-                    }
+                    <button onClick={handleSign}>{
+                        isLoggedIn ? 'Sign Out' : 'Sign In'
+                    }</button>
                     <a href="/cart">Cart</a>
                 </nav>
             </header>

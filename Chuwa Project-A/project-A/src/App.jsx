@@ -10,13 +10,13 @@ function App() {
   return (
     <Router>
       <div>
-      <Header></Header>
+        <Header />
         <Routes>
           <Route path="/login" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="resetPassword" element={<ResetPassword/>} />
         </Routes>
-        <Footer></Footer>
+        <Footer />
       </div>
     </Router>
   )

@@ -1,0 +1,49 @@
+.confirmation-container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+}
+
+.confirmation{
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%; 
+    height: 250px;
+    min-width: 400px; 
+    max-width: 600px; 
+    min-height: 250px;
+    max-height: 300px;
+    text-align: center;
+    position: relative;
+}
+
+#close-icon{
+    right: 15px;
+    top: 15px;
+    position: absolute;
+}
+
+#email-icon{
+    font-size: 80px;
+    padding: 20px;
+    color: #5d3deb;
+}
+
+.confirmation p{
+    font-size: 18px;
+    padding: 10px;
+}
+
+@media(max-width: 500px) {
+    .confirmation{
+        max-width: 250px;
+        padding-top: 10px;
+        padding-right: 4px;
+        padding-bottom: 4px;
+        padding-left: 4px;
+    }
+}

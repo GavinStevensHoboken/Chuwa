@@ -4,6 +4,7 @@ import SignUp from './sign up/Sign up';
 import ResetPassword from './reset password/reset password';
 import Header from './header/Header';
 import Footer from './footer/Footer';
+import Confirmation from './reset password/confirmation';
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="resetPassword" element={<ResetPassword/>} />
+          <Route path="/resetPassword" element={<ResetPassword/>} />
+          <Route path="/confirmation" element={<Confirmation/>} />
         </Routes>
         <Footer />
       </div>

@@ -1,9 +1,13 @@
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 import './reset password.css'
 
 function ResetPassword () {
     const [,setEmail] = useState('');
-    
+    const navigate = useNavigate();
+    const handSubmit = () => {
+        navigate('/confirmation');
+    };
 
     return (
         <>
@@ -14,7 +18,7 @@ function ResetPassword () {
                     </a>
                     <h1>Update your password</h1>
                     <p>Enter your email address, we will send you the recovery link</p>
-                    <form action="/confirmation" method="GET">
+                    <form onSubmit={handSubmit}>
                         <label htmlFor="email">Email</label>
                         <input
                             type="email"

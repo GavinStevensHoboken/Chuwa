@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import DropDown from './DropDown';
 import { Button,Box } from "@mui/material";
 import ProductCard from "./ProductCard";
+import AddProduct from "./AddProduct";
 import Grid from '@mui/material/Unstable_Grid2';
 
 
@@ -21,6 +22,7 @@ const Products = () => {
     const [Data, setData] = useState(undefined);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [open, setOpen] = useState(false);
     useEffect(() => {
         const fetchData = async() => {
             try{
@@ -33,6 +35,15 @@ const Products = () => {
             }
         }
     },[]);
+    
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     if(loading) {
         return (
@@ -48,8 +59,12 @@ const Products = () => {
                 <h1>Products</h1>
                 <div style={{display:"flex", justifyContent:"space-around", margin:"18px"}}>
                     <DropDown/>
-                    <Button variant="outlined" >Add Product</Button>
+                    <Button variant="outlined" onClick={handleClickOpen} >Add Product</Button>
                 </div>
+                <AddProduct
+                    open={open}
+                    onClose={handleClose}
+                />
                 
                 <Box sx={{ flexGrow: 1,margin:"15px" }}>
                 <Grid

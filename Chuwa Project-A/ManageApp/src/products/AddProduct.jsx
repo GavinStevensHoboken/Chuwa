@@ -1,14 +1,26 @@
 import * as React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {Box, FormControl, Input, InputLabel, Button, Dialog, DialogTitle, Grid, TextField,InputAdornment} from '@mui/material';
+import {Box, FormControl, Input, InputLabel, 
+    Button, Dialog, DialogTitle, Grid, 
+    TextField,InputAdornment, Alert, Snackbar} from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 
 const AddProduct = (props) => {
     const fileInputRef = useRef(null);
-    const [filePath, setFilePath] = useState("http://");
+    const [filePath, setFilePath] = useState('http://');
     const [imageUrl, setImageUrl] = useState(null);
+    const [openToast, setOpenToast] = useState(true);
+    const [productData, setProductData] = useState({
+        productName:'',
+        productDescription:'',
+        category:'',
+        price:'',
+        stockQuantity:'',
+        imageLink:''
+    })
+    const [error, setError] = useState('');
 
     useEffect(() => {
         if (filePath) {
@@ -33,13 +45,45 @@ const AddProduct = (props) => {
         onClose();
     };
 
-    const handleListItemClick = (value) => {
-        onClose(value);
+    const handleInputChange = (e) => {
+        const {name, value} = e.target;
+        setProductData((prevData) => ({
+            ...prevData,
+            [name]:value
+            }
+        ));
     };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try{
+            const resp = await fetch('http://localhost:3000/addproduct',{
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(productData)
+            });
+            if(!resp.ok) throw new Error(resp.statusText);
+        }catch(err) {
+            setError(err);
+            setOpenToast(true);
+        }
+    }
 
     return (
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle>Create Product</DialogTitle>
+        <Snackbar 
+            open={openToast}
+            anchorOrigin={{ vertical:"top", horizontal:"center" }} 
+            onClose={() => setOpenToast(false)}
+            autoHideDuration={6000} >
+        <Alert severity="success" sx={{ width: '100%' }}>
+          {error.message}
+        </Alert>
+      </Snackbar>
         <Box
           component="form"
           sx={{
@@ -63,21 +107,25 @@ const AddProduct = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FormControl variant="standard">
-                <label for="productName">Product Name</label>
+                <label htmlFor="productName">Product Name</label>
                 <TextField
                   id="productName"
                   variant="outlined"
+                  name="productName"
+                  onChange={handleInputChange}
                   style={{ width: "150%", borderColor: "#C7D0DD" }}
                 ></TextField>
               </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControl variant="standard">
-                <label for="productDescription">Product Description</label>
+                <label htmlFor="productDescription">Product Description</label>
 
                 <TextareaAutosize
                   id="productDescription"
                   minRows={5}
+                  name="productDescription"
+                  onChange={handleInputChange}
                   style={{
                     maxWidth: "50ch",
                     width: "150%",
@@ -89,33 +137,51 @@ const AddProduct = (props) => {
 
             <Grid item xs={6}>
               <FormControl variant="standard">
-                <label for="category">Category</label>
-                <TextField id="category"></TextField>
+                <label htmlFor="category">Category</label>
+                <TextField 
+                    id="category"
+                    name="category"
+                    onChange={handleInputChange}
+                ></TextField>
               </FormControl>
             </Grid>
 
             <Grid item xs={6}>
               <FormControl variant="standard">
-                <label for="price">Price</label>
-                <TextField id="price"></TextField>
+                <label htmlFor="price">Price</label>
+                <TextField 
+                    id="price"
+                    name="price"
+                    onChange={handleInputChange}
+                ></TextField>
               </FormControl>
             </Grid>
 
             <Grid item xs={12}>
               <FormControl variant="standard">
-                <label for="stockQuantity">In Stock Quantity</label>
-                <TextField id="stockQuantity"></TextField>
+                <label htmlFor="stockQuantity">In Stock Quantity</label>
+                <TextField 
+                    id="stockQuantity"
+                    name="stockQuantity"
+                    onChange={handleInputChange}
+                ></TextField>
               </FormControl>
             </Grid>
 
             <Grid item xs={12}>
               <FormControl variant="standard">
-                <label for="imageLink">Add Image Link</label>
+                <label htmlFor="imageLink">Add Image Link</label>
                 <TextField
                   label="File Path"
-                  defaultValue="http://"
                   value={filePath}
-                  onChange={(e) => setFilePath(e.target.value)}
+                  onChange={(e) => {
+                    setFilePath(e.target.value);
+                    setProductData((prevData) => ({
+                        ...prevData,
+                        [e.target.name]:e.target.value
+                        }
+                    ));
+                }}
                   variant="outlined"
                   style={{marginTop:"5px"}}
                   InputProps={{
@@ -145,7 +211,7 @@ const AddProduct = (props) => {
         </Box>
       
 
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" onClick={handleSubmit}>
             Add Product
           </Button>
         </Box>

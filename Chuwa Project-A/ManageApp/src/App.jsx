@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './firebase/AuthContext';
 import SignIn from './login/login'; 
 import SignUp from './sign up/Sign up';
 import Products from './products/Products';
@@ -10,20 +11,22 @@ import Confirmation from './reset password/confirmation';
 function App() {
 
   return (
-    <Router>
-      <div>
-        <Header />
-        <Routes>
-          <Route path="/products" element={<Products />} />
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/resetPassword" element={<ResetPassword/>} />
-          <Route path="/confirmation" element={<Confirmation/>} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
-  )
+    <AuthProvider>
+      <Router>
+        <div>
+          <Header />
+          <Routes>
+            <Route path="/products" element={<Products />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
+            <Route path="/confirmation" element={<Confirmation />} />
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
+  );
 }
 
 export default App;

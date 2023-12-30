@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './firebase/AuthContext';
 import SignIn from './login/login'; 
-import SignUp from './sign up/Sign up';
+import SignUp from './sign up/SignUp';
 import Products from './products/Products';
 import ResetPassword from './reset password/reset password';
 import Header from './header/Header';

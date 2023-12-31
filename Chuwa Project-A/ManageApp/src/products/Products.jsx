@@ -6,16 +6,16 @@ import AddProduct from "./AddProduct";
 import Grid from '@mui/material/Unstable_Grid2';
 
 
-const testData = [{name:'Apple Iphone 11', storage:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 12', storage:'128G', price:499,selected:0,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Watch', storage:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1558126319-c9feecbf57ee?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Vr 11', storage:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 11', storage:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Macbook 11', storage:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 11', storage:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Dell 11', storage:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 11', storage:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 11', storage:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
+const testData = [{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
+{name:'Apple Iphone 12', detail:'128G', price:499,selected:0,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
+{name:'Watch', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1558126319-c9feecbf57ee?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
+{name:'Vr 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
+{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
+{name:'Macbook 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
+{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
+{name:'Dell 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
+{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
+{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
 ]
 
 const Products = () => {
@@ -75,7 +75,7 @@ const Products = () => {
                     {testData.map((item,idx) => (<ProductCard key={idx} 
                     name={item.name} 
                     price={item.price}
-                    storage={item.storage}
+                    detail={item.detail}
                     selected={item.selected}
                     image={item.image}/>))}
                 </Grid>

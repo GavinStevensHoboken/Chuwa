@@ -27,7 +27,7 @@ const ProductCard = (props) =>{
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {props.name + ' ' + props.storage}
+            {props.name + ' ' + props.detail}
           </Typography>
           <Typography variant="body2" color="text.secondary" fontWeight="bold">
             {'$'+props.price}

@@ -13,12 +13,12 @@ const AddProduct = (props) => {
     const [imageUrl, setImageUrl] = useState(null);
     const [openToast, setOpenToast] = useState(true);
     const [productData, setProductData] = useState({
-        productName:'',
-        productDescription:'',
+        name:'',
         category:'',
+        detail:'',
         price:'',
-        stockQuantity:'',
-        imageLink:''
+        quantity:'',
+        image:''
     })
     const [error, setError] = useState('');
 
@@ -58,7 +58,7 @@ const AddProduct = (props) => {
         e.preventDefault();
 
         try{
-            const resp = await fetch('http://localhost:3000/addproduct',{
+            const resp = await fetch('http://localhost:3000/api/products',{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ const AddProduct = (props) => {
             anchorOrigin={{ vertical:"top", horizontal:"center" }} 
             onClose={() => setOpenToast(false)}
             autoHideDuration={6000} >
-        <Alert severity="success" sx={{ width: '100%' }}>
+        <Alert severity="error" sx={{ width: '100%' }}>
           {error.message}
         </Alert>
       </Snackbar>
@@ -111,7 +111,7 @@ const AddProduct = (props) => {
                 <TextField
                   id="productName"
                   variant="outlined"
-                  name="productName"
+                  name="name"
                   onChange={handleInputChange}
                   style={{ width: "150%", borderColor: "#C7D0DD" }}
                 ></TextField>
@@ -124,7 +124,7 @@ const AddProduct = (props) => {
                 <TextareaAutosize
                   id="productDescription"
                   minRows={5}
-                  name="productDescription"
+                  name="detail"
                   onChange={handleInputChange}
                   style={{
                     maxWidth: "50ch",
@@ -162,7 +162,7 @@ const AddProduct = (props) => {
                 <label htmlFor="stockQuantity">In Stock Quantity</label>
                 <TextField 
                     id="stockQuantity"
-                    name="stockQuantity"
+                    name="quantity"
                     onChange={handleInputChange}
                 ></TextField>
               </FormControl>
@@ -174,11 +174,12 @@ const AddProduct = (props) => {
                 <TextField
                   label="File Path"
                   value={filePath}
+                  name="image"
                   onChange={(e) => {
                     setFilePath(e.target.value);
                     setProductData((prevData) => ({
                         ...prevData,
-                        [e.target.name]:e.target.value
+                        [e.target.name]:filePath
                         }
                     ));
                 }}

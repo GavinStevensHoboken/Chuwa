@@ -2,7 +2,7 @@ const Product = require('../models/Product');
 
 const creatProduct = async (req, res) => {
     try{
-        const productInfo = {...req};
+        const productInfo = {...req.body};
         const product = new Product(productInfo);
         await product.save();
         res.json({message: 'Created successful!'})

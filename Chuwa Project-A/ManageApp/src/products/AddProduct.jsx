@@ -37,6 +37,10 @@ const AddProduct = (props) => {
         if(selectedFile) {
             const path = URL.createObjectURL(selectedFile);
             setFilePath(path);
+            setProductData((prevData) => ({
+                ...prevData,
+                image:path
+            }))
         }
     }
     const { onClose, open } = props;
@@ -179,7 +183,7 @@ const AddProduct = (props) => {
                     setFilePath(e.target.value);
                     setProductData((prevData) => ({
                         ...prevData,
-                        [e.target.name]:filePath
+                        [e.target.name]:e.target.value
                         }
                     ));
                 }}

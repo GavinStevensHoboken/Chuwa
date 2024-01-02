@@ -19,21 +19,24 @@ const testData = [{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,i
 ]
 
 const Products = () => {
-    const [Data, setData] = useState(undefined);
-    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState(undefined);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [open, setOpen] = useState(false);
+
     useEffect(() => {
         const fetchData = async() => {
             try{
-                const res = await fetch('http://localhost:5000/products');
+                const res = await fetch('http://localhost:3000/api/products');
                 const result = await res.json();
                 setData(result);
                 setLoading(false);
             }catch(err){
                 setError(err);
             }
-        }
+        };
+
+        fetchData();
     },[]);
     
 
@@ -72,10 +75,10 @@ const Products = () => {
                     spacing={{ xs: 2, md: 3 }}
                     columns={{ xs: 4, sm: 8, md: 12 }}
                 >
-                    {testData.map((item,idx) => (<ProductCard key={idx} 
+                    {data.map((item,idx) => (<ProductCard key={idx} 
                     name={item.name} 
                     price={item.price}
-                    detail={item.detail}
+                    detail={2}
                     selected={item.selected}
                     image={item.image}/>))}
                 </Grid>

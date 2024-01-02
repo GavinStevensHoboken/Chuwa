@@ -19,6 +19,7 @@
     "mysql2": "^3.3.4",
     "nodemon": "^2.0.22",
     "sequelize": "^6.32.0",
-    "validator": "^13.11.0"
+    "validator": "^13.11.0",
+    "cookie-parser": "^1.4.6"
   }
 }

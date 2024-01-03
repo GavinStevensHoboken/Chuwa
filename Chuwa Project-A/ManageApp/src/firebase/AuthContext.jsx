@@ -1,67 +1,21 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {
-    onAuthStateChanged,
-    createUserWithEmailAndPassword,
-    updateProfile,
-    signInWithEmailAndPassword,
-    EmailAuthProvider,
-    reauthenticateWithCredential,
-    updatePassword,
-    signOut
-} from "firebase/auth";
-import {auth} from "./Firebase";
+import React, { createContext, useState, useEffect } from 'react';
 
-const AuthContext = React.createContext();
+export const AuthContext = createContext({});
 
-export const useAuthentication = () => {
-    return useContext(AuthContext);
-}
-
-export const AuthProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+export const AuthProvider = ({ children }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setCurrentUser(user);
-            setLoading(false);
-        });
-        return unsubscribe;
-    },[]);
-
-    async function doCreateUserWithEmailAndPassword(email, password, displayName){
-        await createUserWithEmailAndPassword(auth, email, password);
-        updateProfile(auth.currentUser,{displayName:displayName});
-    }
-
-    async function doSignInWithEmailAndPassword(email,password){
-        await signInWithEmailAndPassword(auth, email, password);
-    }
-
-    async function doChangePassword(email, oldPassword, newPassword){
-        let authCredential = EmailAuthProvider.credential(email, oldPassword);
-        await reauthenticateWithCredential(auth.currentUser, authCredential);
-        await updatePassword(auth.currentUser, newPassword);
-        await signOut(auth);
-    }
-
-    async function doSignOut(){
-        await signOut();
-    }
-
-    const value = {
-        currentUser,
-        doCreateUserWithEmailAndPassword,
-        doSignInWithEmailAndPassword,
-        doSignOut,
-        doChangePassword
-    }
+        fetch('http://localhost:3000/login', { credentials: 'include' })
+            .then(response => response.json())
+            .then(data => {
+                setIsAuthenticated(data.authenticated);
+            });
+    }, []);
 
     return (
-        <AuthContext.Provider value={value}>
-            {!loading && children}
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+            {children}
         </AuthContext.Provider>
     );
-
-
-}
+};

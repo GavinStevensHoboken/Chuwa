@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
+import { useContext } from 'react';
+import { AuthContext } from '../firebase/AuthContext';
 import { logoutAction } from '../auth/authActions';
 import './Header.css';
 
@@ -9,11 +10,9 @@ import './Header.css';
 function Header() {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
-    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-    const dispatch = useDispatch();
-    
+    const { isAuthenticated } = useContext(AuthContext);
     const handleSign = () => {
-        if (isLoggedIn) {
+        if (isAuthenticated) {
             document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
             dispatch(logoutAction());
         } else {
@@ -38,7 +37,7 @@ function Header() {
                 </form>
                 <nav>
                     <button onClick={handleSign}>{
-                        isLoggedIn ? 'Sign Out' : 'Sign In'
+                        isAuthenticated ? 'Sign Out' : 'Sign In'
                     }</button>
                     <a href="/cart">Cart</a>
                 </nav>

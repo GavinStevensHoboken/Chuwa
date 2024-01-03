@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useDispatch} from 'react-redux';
-import {loginAction} from '../auth/authActions';
+import { useContext } from 'react';
+import { AuthContext } from '../firebase/AuthContext';
 import './login.css'
 
 function Login() {
@@ -11,28 +12,26 @@ function Login() {
     const [passwordShown, setPasswordShown] = useState(false);
     const dispatch = useDispatch();
     const [user, setUser] = useState(null);
+    const { isAuthenticated } = useContext(AuthContext);
 
     useEffect(() => {
-        console.log("Component did mount");
-    }, []);
+        if (isAuthenticated) {
+            navigate('/products');
+        } // 如果未认证，保持在登录页面
+    }, [isAuthenticated, navigate]);
 
-
-    useEffect(() => {
-        fetch('http://localhost:3000/login', {credentials: 'include'})
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.authenticated)
-                if (data.authenticated) {
-                    navigate('/products');
-                } else {
-                    // 用户未认证，保持在登录页面
-                }
-            });
-    }, []);
 
     const toggleVisibility = () => {
         setPasswordShown(!passwordShown);
     }
+
+    useEffect(() => {
+        if(user && user.vendor){
+            navigate('/main_vendor');
+        }else if(user){
+            navigate('/main_regular');
+        }
+    }, [user]); // 依赖项数组，这里只有user
 
     const HandleSubmit = async (event) => {
         event.preventDefault();
@@ -45,14 +44,9 @@ function Login() {
         });
         if (response.ok) {
             const data = await response.json();
+            console.log("data",data)
             document.cookie = `token=${data.token};path=/;max-age=2592000`;
             setUser(data.user);
-            //dispatch(loginAction());
-            if(user.vendor){
-                navigate('/main_v');
-            }else{
-                navigate('/main_r');
-            }
         } else {
             alert('Login Failed')
         }

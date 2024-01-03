@@ -10,7 +10,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [passwordShown, setPasswordShown] = useState(false);
     const dispatch = useDispatch();
-
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         console.log("Component did mount");
@@ -43,12 +43,16 @@ function Login() {
                 'Content-Type': 'application/json',
             },
         });
-        console.log(email, password)
         if (response.ok) {
             const data = await response.json();
             document.cookie = `token=${data.token};path=/;max-age=2592000`;
-            dispatch(loginAction());
-            navigate('/main');
+            setUser(data.user);
+            //dispatch(loginAction());
+            if(user.vendor){
+                navigate('/main_v');
+            }else{
+                navigate('/main_r');
+            }
         } else {
             alert('Login Failed')
         }

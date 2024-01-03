@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const SignUp = async (req, res) => {
     try {
-        const {email, password} = {...req.body};
-        const user = new User({email, password});
+        const {email, password, isVendor: vendor} = {...req.body};
+        const user = new User({email, password, vendor});
         await user.save();
         res.json({message: 'success'})
 
@@ -30,7 +30,16 @@ const Login = async (req, res) => {
             const token = await jwt.sign(payload, process.env.JWT_SECRET, {
                 expiresIn: '30d'
             });
-            res.json({token: token})
+
+            const userResponse = {
+                email: user.email,
+                vendor: user.vendor
+            };
+
+            res.json({
+                token: token,
+                user: userResponse
+            });
         }
 
 

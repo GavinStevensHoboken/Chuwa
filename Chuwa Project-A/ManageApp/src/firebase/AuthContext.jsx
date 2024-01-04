@@ -7,8 +7,6 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate(); // 使用useNavigate钩子
 
-
-
     useEffect(() => {
         fetch('http://localhost:3000/auth', {credentials: 'include'})
             .then(response => {

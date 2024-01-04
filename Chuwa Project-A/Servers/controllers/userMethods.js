@@ -11,7 +11,7 @@ const SignUp = async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).json({message: 'Server Error'});
-    }
+}
 }
 
 const Login = async (req, res) => {
@@ -24,10 +24,10 @@ const Login = async (req, res) => {
             const payload = {
                 user: {
                     id: user._id,
-                    vendor: user.vendor
+                    vendor: user.vendor,
+                    email: user.email
                 }
             };
-
             const token = await jwt.sign(payload, process.env.JWT_SECRET, {
                 expiresIn: '30d'
             });

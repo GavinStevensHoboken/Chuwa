@@ -39,6 +39,7 @@ function Login() {
             setUser(data.user);
         } else {
             alert('Login Failed')
+
         }
     };
 

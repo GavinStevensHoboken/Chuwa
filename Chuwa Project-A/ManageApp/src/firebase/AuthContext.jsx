@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
-    // const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
     const navigate = useNavigate(); // 使用useNavigate钩子
 

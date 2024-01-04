@@ -37,7 +37,7 @@ function Header() {
                     <button onClick={handleSign}>
                         {user ? 'Sign Out' : 'Sign In'}
                     </button>
-                    {user ? `${user.id}, ${user.vendor ? 'vendor' : 'regular'}` : ''}
+                    {user ? `${user.email}, ${user.vendor ? 'vendor' : 'regular'}` : ''}
 
                     <a href="/cart">Cart</a>
                 </nav>

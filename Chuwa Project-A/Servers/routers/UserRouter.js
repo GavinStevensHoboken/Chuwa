@@ -4,11 +4,19 @@ const {SignUp, Login} = require('../controllers/userMethods');
 const authenticateJWT = require('../middleWares/authentication');
 
 
-router.get('/login', authenticateJWT, (req, res) => {
+// router.get('/login', authenticateJWT, (req, res) => {
+//     if (req.isAuthenticated) {
+//         res.json({authenticated: true});
+//     } else {
+//         res.json({authenticated: false});
+//     }
+// });
+
+router.get('/auth', authenticateJWT, (req, res) => {
     if (req.isAuthenticated) {
-        res.json({authenticated: true});
+        res.json(req.user);
     } else {
-        res.json({authenticated: false});
+        res.status(401).json({ message: 'Unauthorized' });
     }
 });
 

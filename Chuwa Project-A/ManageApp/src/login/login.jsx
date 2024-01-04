@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
-import {useDispatch} from 'react-redux';
 import { useContext } from 'react';
 import { AuthContext } from '../firebase/AuthContext';
 import './login.css'
@@ -10,15 +9,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordShown, setPasswordShown] = useState(false);
-    const dispatch = useDispatch();
-    const [user, setUser] = useState(null);
-    const { isAuthenticated } = useContext(AuthContext);
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            navigate('/products');
-        } // 如果未认证，保持在登录页面
-    }, [isAuthenticated, navigate]);
+    const { user, setUser } = useContext(AuthContext);
 
 
     const toggleVisibility = () => {
@@ -44,7 +35,6 @@ function Login() {
         });
         if (response.ok) {
             const data = await response.json();
-            console.log("data",data)
             document.cookie = `token=${data.token};path=/;max-age=2592000`;
             setUser(data.user);
         } else {

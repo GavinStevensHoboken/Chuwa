@@ -23,7 +23,8 @@ const Login = async (req, res) => {
         } else {
             const payload = {
                 user: {
-                    id: user._id
+                    id: user._id,
+                    vendor: user.vendor
                 }
             };
 

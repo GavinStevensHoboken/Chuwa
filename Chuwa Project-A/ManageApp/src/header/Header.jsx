@@ -1,25 +1,23 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react';
-import { AuthContext } from '../firebase/AuthContext';
-import { logoutAction } from '../auth/authActions';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../firebase/AuthContext';
 import './Header.css';
 
 
 
 function Header() {
     const navigate = useNavigate();
+    const {user} = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
-    const { isAuthenticated } = useContext(AuthContext);
+
     const handleSign = () => {
-        if (isAuthenticated) {
+        if (user) {
             document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-            dispatch(logoutAction());
         } else {
             navigate('/login');
         }
     };
-
+    console.log(user);
     return (
             <header className="header">
                 <h1>Management</h1>
@@ -36,9 +34,11 @@ function Header() {
                     </button>
                 </form>
                 <nav>
-                    <button onClick={handleSign}>{
-                        isAuthenticated ? 'Sign Out' : 'Sign In'
-                    }</button>
+                    <button onClick={handleSign}>
+                        {user ? 'Sign Out' : 'Sign In'}
+                    </button>
+                    {user ? `${user.id}, ${user.vendor ? 'vendor' : 'regular'}` : ''}
+
                     <a href="/cart">Cart</a>
                 </nav>
             </header>

@@ -2,6 +2,7 @@ const initialState = {
     isLoggedIn: false
 };
 
+
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'LOGIN':
@@ -12,3 +13,4 @@ export const authReducer = (state = initialState, action) => {
             return state;
     }
 };
+

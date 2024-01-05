@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
-import {useContext} from 'react';
-import {AuthContext} from '../firebase/AuthContext';
+import {useDispatch} from 'react-redux';
+import {loginAction} from '../auth/authActions';
 import './login.css'
 
 function Login() {
@@ -9,20 +9,25 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordShown, setPasswordShown] = useState(false);
-    const { user, setUser } = useContext(AuthContext);
+    const dispatch = useDispatch();
+    const [user, setUser] = useState(null);
 
+    useEffect(() => {
+        fetch('http://localhost:3000/login', {credentials: 'include'})
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.authenticated)
+                if (data.authenticated) {
+                    dispatch(loginAction());
+                    navigate('/products');
+                } else {
+                }
+            });
+    }, []);
 
     const toggleVisibility = () => {
         setPasswordShown(!passwordShown);
     }
-
-    useEffect(() => {
-        if(user && user.vendor){
-            navigate('/main_vendor');
-        }else if(user){
-            navigate('/main_regular');
-        }
-    }, [user]); // 依赖项数组，这里只有user
 
     const HandleSubmit = async (event) => {
         event.preventDefault();
@@ -36,10 +41,17 @@ function Login() {
         if (response.ok) {
             const data = await response.json();
             document.cookie = `token=${data.token};path=/;max-age=2592000`;
-            setUser(data.user);
+            const user = data.user;
+            console.log(user);
+            if(user.vendor){
+                dispatch(loginAction());
+                navigate('/main_v');
+            }else{
+                dispatch(loginAction());
+                navigate('/main_r');
+            }
         } else {
             alert('Login Failed')
-
         }
     };
 

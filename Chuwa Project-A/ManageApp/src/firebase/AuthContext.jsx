@@ -1,30 +1,67 @@
-import React, {createContext, useState, useEffect, useContext} from 'react';
-import {useNavigate} from "react-router-dom";
+import React, {useContext, useState, useEffect} from 'react';
+import {
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    updateProfile,
+    signInWithEmailAndPassword,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    updatePassword,
+    signOut
+} from "firebase/auth";
+import {auth} from "./Firebase";
 
-export const AuthContext = createContext({});
+const AuthContext = React.createContext();
+
+export const useAuthentication = () => {
+    return useContext(AuthContext);
+}
 
 export const AuthProvider = ({children}) => {
-    const [user, setUser] = useState(null);
-    const navigate = useNavigate(); // 使用useNavigate钩子
+    const [currentUser, setCurrentUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:3000/auth', {credentials: 'include'})
-            .then(response => {
-                if (response.status === 401) {
-                    navigate('/login'); // 使用navigate进行导航
-                    return;
-                }
-                return response.json()
-            })
-            .then(data => {
-                setUser(data.user);
-            });
-    }, []);
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setCurrentUser(user);
+            setLoading(false);
+        });
+        return unsubscribe;
+    },[]);
+
+    async function doCreateUserWithEmailAndPassword(email, password, displayName){
+        await createUserWithEmailAndPassword(auth, email, password);
+        updateProfile(auth.currentUser,{displayName:displayName});
+    }
+
+    async function doSignInWithEmailAndPassword(email,password){
+        await signInWithEmailAndPassword(auth, email, password);
+    }
+
+    async function doChangePassword(email, oldPassword, newPassword){
+        let authCredential = EmailAuthProvider.credential(email, oldPassword);
+        await reauthenticateWithCredential(auth.currentUser, authCredential);
+        await updatePassword(auth.currentUser, newPassword);
+        await signOut(auth);
+    }
+
+    async function doSignOut(){
+        await signOut();
+    }
+
+    const value = {
+        currentUser,
+        doCreateUserWithEmailAndPassword,
+        doSignInWithEmailAndPassword,
+        doSignOut,
+        doChangePassword
+    }
 
     return (
-        <AuthContext.Provider value={{user, setUser}}>
-            {children}
+        <AuthContext.Provider value={value}>
+            {!loading && children}
         </AuthContext.Provider>
     );
-};
-export const useAuth = () => useContext(AuthContext);
+
+
+}

@@ -5,10 +5,6 @@ import './SignUp.css'
 
 function SignUp() {
 
-    useEffect(() => {
-        console.log("Component did mount");
-    }, []);
-
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

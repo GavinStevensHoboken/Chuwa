@@ -7,6 +7,7 @@ import ResetPassword from './reset password/reset password';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import Confirmation from './reset password/confirmation';
+import ProductDetails from "./products/ProductDetails";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
                         <Route path="/signup" element={<SignUp/>}/>
                         <Route path="/resetPassword" element={<ResetPassword/>}/>
                         <Route path="/confirmation" element={<Confirmation/>}/>
+                        <Route path="/productDetails" element={<  ProductDetails />}/>
                     </Routes>
                     <Footer/>
                 </div>

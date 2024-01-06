@@ -4,10 +4,11 @@ import { CardContent,CardMedia, Typography,CardActionArea,IconButton} from '@mui
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove'
 import { Button,Stack } from '@mui/material';
+import {useAuth} from '../firebase/AuthContext';
 
 const ProductCard = (props) =>{
     const [count, setCount] = React.useState(props.selected);
-
+    const {setUser, user} = useAuth();
     const handleIncrement = () => {
         setCount(count+1);
     };
@@ -16,6 +17,10 @@ const ProductCard = (props) =>{
         if(count>0) setCount(count-1);
         
     };
+    
+    const handleAdd = () => {
+      console.log(user.id);
+    }
   return (
     <Card sx={{ maxWidth: 345, height: '100%'}}>
       <CardActionArea sx={{ height: '100%'  }}>
@@ -49,7 +54,7 @@ const ProductCard = (props) =>{
         </Stack>
       ):(
         <Stack direction="row" spacing={2}>
-            <Button variant="contained">Add</Button>
+            <Button variant="contained" onClick={handleAdd}>Add</Button>
             <Button variant="contained">Edit</Button>
         </Stack>
         

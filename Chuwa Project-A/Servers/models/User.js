@@ -26,6 +26,16 @@ const user = new Schema({
     vendor: {
         type: Boolean,
         default: false
+    },
+    cart: {
+        items: [{
+            productId: String,
+            name: String,
+            quantity: Number,
+            price: Number,
+            image: String
+          }],
+        
     }
 })
 

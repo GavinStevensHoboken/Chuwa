@@ -7,6 +7,7 @@ import ResetPassword from './reset password/reset password';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import Confirmation from './reset password/confirmation';
+import Cart from './products/Cart'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
                 <div>
                     <Header/>
                     <Routes>
+                        <Route path="/cart" element={<Cart/>}/>
                         <Route path="/products" element={<Products/>}/>
                         <Route path="/login" element={<SignIn/>}/>
                         <Route path="/signup" element={<SignUp/>}/>

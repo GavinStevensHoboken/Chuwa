@@ -9,16 +9,16 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 const AddProduct = (props) => {
     const fileInputRef = useRef(null);
-    const [filePath, setFilePath] = useState('http://');
+    const [filePath, setFilePath] = useState(props.image);
     const [imageUrl, setImageUrl] = useState(null);
     const [openToast, setOpenToast] = useState(true);
     const [productData, setProductData] = useState({
-        name:'',
+        name:props.name,
         category:'',
-        detail:'',
-        price:'',
+        detail:props.detail,
+        price:props.price,
         quantity:'',
-        image:''
+        image:props.image
     })
     const [error, setError] = useState('');
 
@@ -116,6 +116,7 @@ const AddProduct = (props) => {
                   id="productName"
                   variant="outlined"
                   name="name"
+                  value={productData.name}
                   onChange={handleInputChange}
                   style={{ width: "150%", borderColor: "#C7D0DD" }}
                 ></TextField>
@@ -129,6 +130,7 @@ const AddProduct = (props) => {
                   id="productDescription"
                   minRows={5}
                   name="detail"
+                  value={productData.detail}
                   onChange={handleInputChange}
                   style={{
                     maxWidth: "50ch",
@@ -156,6 +158,7 @@ const AddProduct = (props) => {
                 <TextField 
                     id="price"
                     name="price"
+                    value={productData.price}
                     onChange={handleInputChange}
                 ></TextField>
               </FormControl>

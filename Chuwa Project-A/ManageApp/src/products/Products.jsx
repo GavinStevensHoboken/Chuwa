@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import { useAuth } from "../firebase/AuthContext";
 import DropDown from './DropDown';
 import {Button, Box} from "@mui/material";
 import ProductCard from "./ProductCard";
@@ -83,6 +84,7 @@ const Products = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [open, setOpen] = useState(false);
+    const {user, setUser} = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -122,7 +124,7 @@ const Products = () => {
                 <h1>Products</h1>
                 <div style={{display: "flex", justifyContent: "space-around", margin: "18px"}}>
                     <DropDown/>
-                    <Button variant="outlined" onClick={handleClickOpen}>Add Product</Button>
+                    {user && user.vendor && <Button variant="outlined" onClick={handleClickOpen} >Add Product</Button>}
                 </div>
                 <AddProduct
                     open={open}

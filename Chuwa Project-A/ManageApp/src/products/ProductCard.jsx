@@ -4,10 +4,11 @@ import { CardContent,CardMedia, Typography,CardActionArea,IconButton} from '@mui
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove'
 import { Button,Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = (props) =>{
     const [count, setCount] = React.useState(props.selected);
-
+    const navigate = useNavigate();
     const handleIncrement = () => {
         setCount(count+1);
     };
@@ -16,9 +17,14 @@ const ProductCard = (props) =>{
         if(count>0) setCount(count-1);
         
     };
+
+    const handleCardClick = () => {
+        navigate(`/productDetails/${props.id}`);
+    };
+
   return (
     <Card sx={{ maxWidth: 345, height: '100%'}}>
-      <CardActionArea sx={{ height: '100%'  }}>
+      <CardActionArea sx={{ height: '100%'  }} onClick={handleCardClick}>
         <CardMedia
           component="img"
           sx={{ height: '50%' }}

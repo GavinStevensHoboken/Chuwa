@@ -53,10 +53,10 @@ const Login = async (req, res) => {
 const UserCart = async (req, res) => {
     try {
         const { userId, productInfo } = req.body;
-
+        console.log(userId)
         const user = await User.findById(userId);
         const cart = user.cart;
-        const existingProductIndex = cart.items.findIndex(item => item.name === productInfo.name);
+        const existingProductIndex = cart.items.findIndex(item => item.productId === productInfo.productId);
         
         if (existingProductIndex > -1) {
             cart.items[existingProductIndex].quantity += 1;
@@ -67,6 +67,34 @@ const UserCart = async (req, res) => {
         await user.save();
 
         res.json({ message: 'Product added to cart', cart: user.cart });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+const decrementCart = async (req, res) => {
+    try {
+        const { userId, productInfo } = req.body;
+        
+        const user = await User.findById(userId);
+        const cart = user.cart;
+
+        const existingProductIndex = cart.items.findIndex(item => item.productId === productInfo.productId);
+        
+        if (existingProductIndex > -1) {
+            // Decrement
+            cart.items[existingProductIndex].quantity -= 1;
+    
+            // remove if there is none left
+            if (cart.items[existingProductIndex].quantity === 0) {
+                cart.items.splice(existingProductIndex, 1);
+            }
+        }
+    
+        await user.save();
+    
+        res.json({ message: 'Product quantity decremented', cart: user.cart });
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ message: 'Server Error' });
@@ -92,5 +120,6 @@ module.exports = {
     SignUp,
     Login,
     UserCart,
-    FindCart
+    FindCart,
+    decrementCart
 };

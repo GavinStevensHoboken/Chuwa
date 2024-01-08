@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {SignUp, Login, UserCart, FindCart} = require('../controllers/userMethods');
+const {SignUp, Login, UserCart, FindCart, decrementCart} = require('../controllers/userMethods');
 const authenticateJWT = require('../middleWares/authentication');
 
 
@@ -17,8 +17,10 @@ router.post('/api/login', Login);
 
 router.post('/api/signup', SignUp);
 
-router.post('/api/addCart', UserCart);
+router.post('/api/Cart', UserCart);
 
-router.get('/api/getCart/:id', FindCart);
+router.get('/api/Cart/:id', FindCart);
+
+router.put('/api/Cart', decrementCart)
 
 module.exports = router;

@@ -1,0 +1,5 @@
+.image-item {
+    width: 250px; /* 设置图片的宽度 */
+    height: 250px; /* 设置图片的高度 */
+    margin: 5px; /* 设置图片之间的间距 */
+  }

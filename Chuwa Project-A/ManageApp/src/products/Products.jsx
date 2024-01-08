@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../firebase/AuthContext";
 import DropDown from './DropDown';
 import { Button,Box } from "@mui/material";
 import ProductCard from "./ProductCard";
@@ -6,23 +7,14 @@ import AddProduct from "./AddProduct";
 import Grid from '@mui/material/Unstable_Grid2';
 
 
-const testData = [{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 12', detail:'128G', price:499,selected:0,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Watch', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1558126319-c9feecbf57ee?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Vr 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Macbook 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Dell 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-{name:'Apple Iphone 11', detail:'128G', price:499,selected:2,image:'https://images.unsplash.com/photo-1607936854279-55e8a4c64888?q=80&w=1664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
-]
+
 
 const Products = () => {
     const [data, setData] = useState(undefined);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [open, setOpen] = useState(false);
+    const {user, setUser} = useAuth();
 
     useEffect(() => {
         const fetchData = async() => {
@@ -62,13 +54,13 @@ const Products = () => {
                 <h1>Products</h1>
                 <div style={{display:"flex", justifyContent:"space-around", margin:"18px"}}>
                     <DropDown/>
-                    <Button variant="outlined" onClick={handleClickOpen} >Add Product</Button>
+                    {user && user.vendor && <Button variant="outlined" onClick={handleClickOpen} >Add Product</Button>}
                 </div>
-                <AddProduct
+                 <AddProduct
                     open={open}
                     onClose={handleClose}
                 />
-                
+                {console.log(user && user.vendor)}
                 <Box sx={{ flexGrow: 1,margin:"15px" }}>
                 <Grid
                     container
@@ -76,6 +68,7 @@ const Products = () => {
                     columns={{ xs: 4, sm: 8, md: 12 }}
                 >
                     {data.map((item,idx) => (<ProductCard key={idx} 
+                    productId={item._id}
                     name={item.name} 
                     price={item.price}
                     detail={2}

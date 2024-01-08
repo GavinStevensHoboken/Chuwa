@@ -62,9 +62,22 @@ const updateProduct = async (req, res) => {
         res.status(500).json({message: 'Server Error'});
     }
 }
+const getProductById = async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const product = await Product.findById(productId);
+        res.json(product);
+    } catch (error) {
+        if (error.name === 'CastError') {
+            return res.status(400).json({ message: "Invalid product ID" });
+        }
+        res.status(500).send(error.message);
+    }
+};
 
 module.exports = {
     creatProduct,
     getAllProducts,
-    updateProduct
+    updateProduct,
+    getProductById
 }

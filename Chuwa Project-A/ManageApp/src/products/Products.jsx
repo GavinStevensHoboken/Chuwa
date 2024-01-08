@@ -66,7 +66,7 @@ const Products = () => {
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
                 margin: "18px",
               }}
             >

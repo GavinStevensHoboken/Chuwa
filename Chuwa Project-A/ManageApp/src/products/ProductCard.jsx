@@ -88,8 +88,8 @@ const ProductCard = (props) =>{
                 </CardContent>
             </CardActionArea>
             {count ? (
-                <Stack direction="row" spacing={2}>
-                    <div style={{ display: 'flex',alignItems: 'center' }}>
+                <Stack direction="row" spacing={10} justifyContent="space-between">
+                    <div style={{ display: 'flex',alignItems: 'center', margin:'0.7px'}}>
                         <IconButton onClick={handleDecrement} style={{ backgroundColor: '#007BFF', color: 'white',margin: '2px' }}>
                             <RemoveIcon />
                         </IconButton>
@@ -98,13 +98,18 @@ const ProductCard = (props) =>{
                             <AddIcon />
                         </IconButton>
                     </div>
-                    <Button variant="contained" style={{justifyContent: 'flex-end'}}> Edit </Button>
+                    <div>
+                    {user && user.vendor && <Button variant="contained" onClick={handleClickOpen} style={{margin:'3px' }}>Edit </Button>}
+                    </div>
                 </Stack>
             ):(
-                <Stack direction="row" spacing={2}>
-                    <Button variant="contained" onClick={handleIncrement}>Add</Button>
-                    {user && user.vendor && <Button variant="contained" onClick={handleClickOpen} >Edit </Button>}
-                    <AddProduct
+                <Stack direction="row" spacing={10} justifyContent="space-between">
+                    <Button variant="contained" onClick={handleIncrement} style={{margin:'4px'}}>Add</Button>
+                    {user && user.vendor && <Button variant="contained" onClick={handleClickOpen} style={{margin:'4px'}}>Edit </Button>}
+                </Stack>
+
+            ) }
+            <AddProduct
                         open={open}
                         onClose={handleClose}
                         name={props.name}
@@ -113,9 +118,6 @@ const ProductCard = (props) =>{
                         image={props.image}
                         productId={props.productId}
                     />
-                </Stack>
-
-            ) }
 
         </Card>
     );

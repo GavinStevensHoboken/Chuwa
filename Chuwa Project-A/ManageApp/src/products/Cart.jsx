@@ -11,22 +11,21 @@ function Cart() {
     const {user, setUser} = useAuth();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isUpdate, setUpdate] = useState(false);
     
     useEffect( () => {
         if (user) {
             const userId = user.id;
             dispatch(fetchCart(userId));
         }
-    }, [user, dispatch])
+    }, [user, isUpdate])
 
-    const handleDecrement = (itemInfo) => {
+    const handleDecrement = async (itemInfo) => {
         const userId = user.id;
-        dispatch(decrementCartItem(userId, itemInfo));
+        await dispatch(decrementCartItem(userId, itemInfo));
+        setUpdate(!isUpdate);
     }
 
-    const test = () => {
-        navigate('/cart');
-    }
     console.log(cart)
     return (
         <>

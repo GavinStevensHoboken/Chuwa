@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 const ProductCard = (props) =>{
     const [count, setCount] = React.useState(props.selected);
     const [open, setOpen] = useState(false);
-    const {user, setUser} = useAuth();
+    const {user} = useAuth();
 
 
     const navigate = useNavigate();
@@ -54,7 +54,7 @@ const ProductCard = (props) =>{
     };
 
     return (
-        <Card sx={{ maxWidth: 345, height: '100%'}}>
+        <Card sx={{ maxWidth: 345, height: '100%'}} className='image-item'>
             <CardActionArea sx={{ height: '100%'  }} onClick={handleCardClick}>
                 <CardMedia
                     component="img"

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useState, useRef, useEffect } from 'react';
+import { ref, uploadBytes, getDownloadURL} from 'firebase/storage';
+import {storage} from '../firebase/Firebase';
 import PropTypes from 'prop-types';
 import {Box, FormControl, Input, InputLabel, 
     Button, Dialog, DialogTitle, Grid, 
@@ -10,7 +12,9 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 const AddProduct = (props) => {
     const fileInputRef = useRef(null);
     const [filePath, setFilePath] = useState(props.image);
+    const [filename, setFilename] = useState('');
     const [imageUrl, setImageUrl] = useState(null);
+    const [upload, setUpload] = useState(undefined);
     const [openToast, setOpenToast] = useState(false);
     const [productData, setProductData] = useState({
         name:props.name,
@@ -28,6 +32,7 @@ const AddProduct = (props) => {
         }
       }, [filePath]);
 
+
     const handleButtonClick = () => {
         fileInputRef.current.click();
     }
@@ -36,6 +41,8 @@ const AddProduct = (props) => {
         const selectedFile = event.target.files[0];
         if(selectedFile) {
             const path = URL.createObjectURL(selectedFile);
+            setUpload(selectedFile);
+            setFilename(selectedFile.name);
             setFilePath(path);
             setProductData((prevData) => ({
                 ...prevData,
@@ -60,16 +67,22 @@ const AddProduct = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try{
+            const storageRef = ref(storage, filename);
+
+            const img = await uploadBytes(storageRef, upload);
+            const uploadUrl = await getDownloadURL(img.ref);
+
             const resp = await fetch('http://localhost:3000/api/products',{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',
                 },
-                body:JSON.stringify(productData)
+                body:JSON.stringify({...productData,image: uploadUrl})
             });
             if(!resp.ok) throw new Error("Please fulfill all blanks");
+
+
         }catch(err) {
             setError(err);
             setOpenToast(true);

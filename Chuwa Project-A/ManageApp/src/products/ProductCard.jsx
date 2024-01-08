@@ -66,7 +66,7 @@ const ProductCard = (props) =>{
 
 
     const handleCardClick = () => {
-        navigate(`/productDetails/${props.id}`);
+        navigate(`/productDetails/${props.productId}`);
     };
 
     return (

@@ -11,7 +11,7 @@ const AddProduct = (props) => {
     const fileInputRef = useRef(null);
     const [filePath, setFilePath] = useState(props.image);
     const [imageUrl, setImageUrl] = useState(null);
-    const [openToast, setOpenToast] = useState(true);
+    const [openToast, setOpenToast] = useState(false);
     const [productData, setProductData] = useState({
         name:props.name,
         category:'',
@@ -69,7 +69,7 @@ const AddProduct = (props) => {
                 },
                 body:JSON.stringify(productData)
             });
-            if(!resp.ok) throw new Error(resp.statusText);
+            if(!resp.ok) throw new Error("Please fulfill all blanks");
         }catch(err) {
             setError(err);
             setOpenToast(true);

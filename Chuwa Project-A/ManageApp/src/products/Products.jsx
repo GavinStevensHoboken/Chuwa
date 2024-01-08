@@ -19,6 +19,7 @@ const Products = () => {
     const {user} = useAuth();
     const [pageNum, setPageNum] = useState(1);
     const [pages, setPages] = useState(0);
+    const [effect, setEffect] = useState(undefined)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,7 +35,7 @@ const Products = () => {
         };
 
         fetchData();
-    }, []);
+    }, [effect]);
 
     const handleChange = (e ,value) => {
         setPageNum(value);
@@ -66,7 +67,7 @@ const Products = () => {
                 margin: "18px",
               }}
             >
-              <DropDown />
+              <DropDown data={data} setData={setData} setEffect={setEffect} />
               {user && user.vendor && (
                 <Button variant="outlined" onClick={handleClickOpen}>
                   Add Product

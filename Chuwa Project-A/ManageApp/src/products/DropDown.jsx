@@ -17,12 +17,27 @@ const Select = React.forwardRef(function Select(props, ref) {
   return <BaseSelect {...props} ref={ref} slots={slots} />;
 });
 
-const DropDown = function() {
+const DropDown = function(props) {
+
+  const lotToHi = () => {
+    let data = [...props.data].sort((a,b) => a.price - b.price);
+    console.log(data);
+    props.setData(data);
+  }
+
+  const hitToLo = () => {
+    const data = [...props.data].sort((a,b) => b.price - a.price);
+    props.setData(data);
+  }
+
+  const lastAdded = () => {
+    props.setEffect(new Number(0)); // trigger useEffect in Products by changing reference in dependencies
+  }
   return (
     <Select defaultValue={10}>
-      <Option value={10}>Last added</Option>
-      <Option value={20}>Price: low to high</Option>
-      <Option value={30}>Price: high to low</Option>
+      <Option value={10} onClick={lastAdded}>Last added</Option>
+      <Option value={20} onClick={lotToHi}>Price: low to high</Option>
+      <Option value={30} onClick={hitToLo}>Price: high to low</Option>
     </Select>
   );
 }

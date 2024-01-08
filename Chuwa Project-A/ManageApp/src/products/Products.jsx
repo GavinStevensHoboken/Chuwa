@@ -12,7 +12,7 @@ import Stack from '@mui/material/Stack';
 
 
 const Products = () => {
-    const [data, setData] = useState(undefined);
+    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [open, setOpen] = useState(false);
@@ -23,19 +23,22 @@ const Products = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const res = await fetch('http://localhost:3000/api/products');
-                const result = await res.json();
-                setData(result);
-                setLoading(false);
-                setPages(Math.ceil(result.length / 8));
-            } catch (err) {
-                setError(err);
+            if(user && user.id){
+                try {
+                    const res = await fetch('http://localhost:3000/api/productsByUser/'+user.id);
+                    const result = await res.json();
+                    setData(result);
+                    setLoading(false);
+                    setPages(Math.ceil(result.length / 8));
+                } catch (err) {
+                    setError(err);
+                }
             }
+            
         };
 
         fetchData();
-    }, [effect]);
+    }, [effect,user]);
 
     const handleChange = (e ,value) => {
         setPageNum(value);
@@ -85,7 +88,7 @@ const Products = () => {
                 {data.slice((pageNum-1)*8,pageNum*8).map((item, idx) => (
                   <ProductCard
                     key={idx}
-                    id={item._id}
+                    productId={item._id}
                     name={item.name}
                     price={item.price}
                     detail={2}

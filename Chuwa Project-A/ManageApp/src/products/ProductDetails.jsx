@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import './ProductDetails.css';
 import {useParams} from 'react-router-dom';
 
+
 const ProductDetail = () => {
     let {productId} = useParams();
     const [products, setProducts] = useState([

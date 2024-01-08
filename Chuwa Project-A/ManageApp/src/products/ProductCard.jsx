@@ -21,21 +21,37 @@ const ProductCard = (props) =>{
 
     const navigate = useNavigate();
     const handleIncrement = async () => {
-        setCount(count + 1);
-        try {
+        setCount(count+1);
+        
+        const productInfo = {
+          productId: props.productId,
+          name: props.name,
+          image: props.image,
+          price: props.price,
+        };
+        const userId = user.id;
+        try{
             //这个API待定，等购物车功能实现
-            const resp = await fetch('http://localhost:3000/api/user', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({userId: userId, productId: props.productId})
+            // const resp = await fetch('http://localhost:3000/api/user',{
+            //     method: 'POST',
+            //     headers:{
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body:JSON.stringify({userId: userId, productId: props.productId})
+            // });
+            // if(!resp.ok) throw new Error(resp.statusText);
+            await fetch('http://localhost:3000/api/Cart', {
+              method: 'POST',
+              body: JSON.stringify({userId, productInfo}),
+              headers: {
+                  'Content-Type': 'application/json',
+              },
             });
-            if (!resp.ok) throw new Error(resp.statusText);
-        } catch (err) {
+        }catch(err) {
             console.log(err);
         }
     };
+
     const handleClickOpen = () => {
         setOpen(true);
     };

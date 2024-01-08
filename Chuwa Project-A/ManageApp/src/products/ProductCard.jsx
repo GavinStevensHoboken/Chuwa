@@ -24,7 +24,7 @@ const ProductCard = (props) =>{
         setCount(count+1);
         
         const productInfo = {
-          productId: props.id,
+          productId: props.productId,
           name: props.name,
           image: props.image,
           price: props.price,

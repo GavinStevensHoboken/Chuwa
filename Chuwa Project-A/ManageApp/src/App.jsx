@@ -24,7 +24,7 @@ function App() {
                         <Route path="/signup" element={<SignUp/>}/>
                         <Route path="/resetPassword" element={<ResetPassword/>}/>
                         <Route path="/confirmation" element={<Confirmation/>}/>
-                        <Route path="/productDetails" element={<  ProductDetails />}/>
+                        <Route path="/productDetails/:productId" element={<ProductDetails/>}/>
                     </Routes>
                     <Footer/>
                 </div>

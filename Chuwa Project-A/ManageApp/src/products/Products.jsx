@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import { useAuth } from "../firebase/AuthContext";
 import DropDown from './DropDown';
-import { Button,Box } from "@mui/material";
+import {Button, Box} from "@mui/material";
 import ProductCard from "./ProductCard";
 import AddProduct from "./AddProduct";
 import Grid from '@mui/material/Unstable_Grid2';
-
+import * as React from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 
 
@@ -14,24 +16,29 @@ const Products = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [open, setOpen] = useState(false);
-    const {user, setUser} = useAuth();
+    const {user} = useAuth();
+    const [pageNum, setPageNum] = useState(1);
+    const [pages, setPages] = useState(0);
 
     useEffect(() => {
-        const fetchData = async() => {
-            try{
+        const fetchData = async () => {
+            try {
                 const res = await fetch('http://localhost:3000/api/products');
                 const result = await res.json();
                 setData(result);
                 setLoading(false);
-            }catch(err){
+                setPages(Math.ceil(result.length / 8));
+            } catch (err) {
                 setError(err);
             }
         };
 
         fetchData();
-    },[]);
-    
+    }, []);
 
+    const handleChange = (e ,value) => {
+        setPageNum(value);
+    }
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -40,46 +47,60 @@ const Products = () => {
         setOpen(false);
     };
 
-    if(loading) {
+    if (loading) {
         return (
             <div>Page is loading</div>
         )
-    }else if(error){
-        return(
+    } else if (error) {
+        return (
             <div>{error}</div>
         )
-    } else{
+    } else {
         return (
-            <>
-                <h1>Products</h1>
-                <div style={{display:"flex", justifyContent:"space-around", margin:"18px"}}>
-                    <DropDown/>
-                    {user && user.vendor && <Button variant="outlined" onClick={handleClickOpen} >Add Product</Button>}
-                </div>
-                 <AddProduct
-                    open={open}
-                    onClose={handleClose}
-                />
-                {console.log(user && user.vendor)}
-                <Box sx={{ flexGrow: 1,margin:"15px" }}>
-                <Grid
-                    container
-                    spacing={{ xs: 2, md: 3 }}
-                    columns={{ xs: 4, sm: 8, md: 12 }}
-                >
-                    {data.map((item,idx) => (<ProductCard key={idx} 
-                    productId={item._id}
-                    name={item.name} 
+          <>
+            <h1>Products</h1>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                margin: "18px",
+              }}
+            >
+              <DropDown />
+              {user && user.vendor && (
+                <Button variant="outlined" onClick={handleClickOpen}>
+                  Add Product
+                </Button>
+              )}
+            </div>
+            <AddProduct open={open} onClose={handleClose} />
+
+            <Box sx={{ flexGrow: 1, margin: "15px" }}>
+              <Grid
+                container
+                spacing={{ xs: 2, md: 3 }}
+                columns={{ xs: 4, sm: 8, md: 12 }}
+              >
+                {data.slice((pageNum-1)*8,pageNum*8).map((item, idx) => (
+                  <ProductCard
+                    key={idx}
+                    id={item._id}
+                    name={item.name}
                     price={item.price}
                     detail={2}
                     selected={item.selected}
-                    image={item.image}/>))}
-                </Grid>
-                </Box>
-                
-            </>
-            
-        )
+                    image={item.image}
+                  />
+                ))}
+              </Grid>
+            </Box>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>
+            <Stack spacing={2} >
+              <Pagination count={pages} page={pageNum} onChange={handleChange} color="primary" />
+            </Stack>
+            </div>
+          </>
+        );
     }
 }
 

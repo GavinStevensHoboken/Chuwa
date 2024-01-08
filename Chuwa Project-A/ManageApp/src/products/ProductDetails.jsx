@@ -1,11 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './ProductDetails.css';
-import Colors from './components/Colors'
-import DetailsThumb from './components/DetailsThumb';
-import {fontSize} from "@mui/system";
+import {useParams} from 'react-router-dom';
 
 
 const ProductDetail = () => {
+    let {productId} = useParams();
     const [products, setProducts] = useState([
         {
             "_id": "1",
@@ -30,53 +29,48 @@ const ProductDetail = () => {
         }
     ]);
 
-    const [index, setIndex] = useState(0);
-
-    const myRef = useRef(null);
-
-    // HandleTab function
-    const handleTab = index => {
-        setIndex(index);
-        const images = myRef.current.children;
-        for (let i = 0; i < images.length; i++) {
-            images[i].className = images[i].className.replace("active", "");
-        }
-        images[index].className = "active";
-    };
-
-    // ComponentDidMount equivalent using useEffect
     useEffect(() => {
-        myRef.current.children[index].className = "active";
-    }, [index]); // Empty dependency array to run only once
+        const fetchProduct = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/api/products/${productId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                console.log("Fetching product failed", error);
+            }
+        };
+        if (productId) {
+            fetchProduct();
+        }
+    }, [productId]);
 
     return (
         <div className="app">
-            {
-                products.map(item => (
-                    <div className="details" key={item._id}>
-                        <div className="big-img">
-                            <img src={item.src[index]} alt={item.title}/>
-                        </div>
-                        <div className="box">
-                            <div style={{minHeight: '40px'}} className="">
-                                <h2>{item.title}</h2>
-                            </div>
-
-                            <div className="row">
-                                <span style={{fontSize: '20px'}}>${item.price}</span>
-                            </div>
-                            <Colors colors={item.colors}/>
-                            <p>{item.description}</p>
-                            <p>{item.content}</p>
-                            <DetailsThumb images={item.src} tab={handleTab} myRef={myRef}/>
-                            <div className="button-container">
-                                <button className="cart">Add To Cart</button>
-                                <button className="edit">Edit</button>
-                            </div>
-                        </div>
+            <div className="details" key={products._id}>
+                <div className="big-img">
+                    <img src={products.image} alt={products.name}/>
+                </div>
+                <div className="box">
+                    <div style={{minHeight: '40px'}} className="">
+                        <h3>{products.category}</h3>
+                        <h2>{products.name}</h2>
                     </div>
-                ))
-            }
+                    <div className="row">
+                        <span style={{fontSize: '20px'}}>${products.price}</span>
+                    </div>
+                    {products.quantity === 0 && (
+                        <div className="out-of-stock-label">Out of Stock</div>
+                    )}
+                    <p>{products.detail}</p>
+                    <div className="button-container">
+                        <button className="cart">Add To Cart</button>
+                        <button className="edit">Edit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

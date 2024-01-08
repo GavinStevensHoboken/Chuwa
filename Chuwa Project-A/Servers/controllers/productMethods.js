@@ -27,17 +27,18 @@ const getProductsByUserId = async (req, res) => {
     let cart = null;
     try {
         const userId = req.params.id;
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).lean();
         cart = user.cart;
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ message: 'Server Error' });
     }
     try{
-        const products = await Product.find();
+        const products = await Product.find().lean();
         //需要Cart里加一个product id的字段
         const result = products.map((product) => {
-            const cartItem = cart.find((item) => item.id === product.id);
+            const cartItem = cart.items.find((item) => item.productId === product._id.toString());
+
             const selectedQuantity = cartItem? cartItem.quantity: 0;
             return {
                 ...product,
@@ -79,5 +80,6 @@ module.exports = {
     creatProduct,
     getAllProducts,
     updateProduct,
-    getProductById
+    getProductById,
+    getProductsByUserId
 }

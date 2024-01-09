@@ -10,19 +10,24 @@ import AddProduct from "./AddProduct";
 import { useAuth } from "../firebase/AuthContext";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCart, calculateTotalPrice, decrementCartItem, incrementCartItem } from '../auth/cartAction';
-
-
-
-
 import { useNavigate } from 'react-router-dom';
 
 const ProductCard = (props) =>{
     const [count, setCount] = React.useState(props.selected);
     const [open, setOpen] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
     const {user} = useAuth();
+    const cart = useSelector(state => state.cart.items);
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            const userId = user.id;
+            dispatch(fetchCart(userId));
+        }
+    }, [user, isUpdate]);
+
     const handleIncrement = async () => {
         setCount(count+1);
         
@@ -35,6 +40,7 @@ const ProductCard = (props) =>{
         const userId = user.id;
         try{
             await dispatch(incrementCartItem(userId, productInfo));
+            setIsUpdate(!isUpdate);
         }catch(err) {
             console.log(err);
         }
@@ -59,6 +65,7 @@ const ProductCard = (props) =>{
         const userId = user.id;
         try{
             await dispatch(decrementCartItem(userId, productInfo));
+            setIsUpdate(!isUpdate);
         }catch(err){
             console.log(err);
         }

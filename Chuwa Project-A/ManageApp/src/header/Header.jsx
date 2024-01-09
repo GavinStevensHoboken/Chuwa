@@ -2,12 +2,17 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useAuth} from '../firebase/AuthContext';
 import './Header.css';
-
+import Cart from '../products/SidebarCart';
 
 function Header() {
     const navigate = useNavigate();
     const {setUser, user} = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    const toggleCart = () => {
+        setIsCartOpen(!isCartOpen);
+    };
 
     const handleSign = () => {
         if (user) {
@@ -38,7 +43,9 @@ function Header() {
                 </button>
                 {user ? `${user.email}, ${user.vendor ? 'vendor' : 'regular'}` : ''}
 
-                <a href="/cart">Cart</a>
+                {/* <a href="/cart">Cart</a> */}
+                <button onClick={toggleCart}>Cart</button>
+                <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
             </nav>
         </header>
     );

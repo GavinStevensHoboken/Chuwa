@@ -3,7 +3,6 @@ import { useAuth } from '../firebase/AuthContext';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCart, decrementCartItem, incrementCartItem, calculateTotalPrice } from '../auth/cartAction';
 import "./Cart.css";
-import { Button } from '@mui/base';
 
 
 function Cart() {
@@ -50,7 +49,7 @@ function Cart() {
                                     <div className="product-info">
                                         <h4>{item.name}</h4>
                                         <p>quantity: {item.quantity}</p>
-                                        <button onClick={() => handleDecrement(item)}>delete</button>
+                                        <button onClick={() => handleDecrement(item)}>Delete</button>
                                         <button onClick={() => handleIncrement(item)}>Add</button>
                                     </div>
                                     <h5>Price: {item.quantity*item.price}</h5>

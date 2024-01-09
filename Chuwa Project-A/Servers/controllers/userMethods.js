@@ -53,7 +53,7 @@ const Login = async (req, res) => {
 const UserCart = async (req, res) => {
     try {
         const { userId, productInfo } = req.body;
-        console.log(userId)
+
         const user = await User.findById(userId);
         const cart = user.cart;
         const existingProductIndex = cart.items.findIndex(item => item.productId === productInfo.productId);

@@ -36,7 +36,7 @@ const getProductsByUserId = async (req, res) => {
     try{
         const products = await Product.find().lean();
         //需要Cart里加一个product id的字段
-        const result = products.map((product) => {
+        const result = cart && cart.items ? products.map((product) => {
             const cartItem = cart.items.find((item) => item.productId === product._id.toString());
 
             const selectedQuantity = cartItem? cartItem.quantity: 0;
@@ -44,7 +44,7 @@ const getProductsByUserId = async (req, res) => {
                 ...product,
                 selected:selectedQuantity
             };
-        })
+        }) : products;
         res.json(result);
     }catch (err){
         console.error(err.message);

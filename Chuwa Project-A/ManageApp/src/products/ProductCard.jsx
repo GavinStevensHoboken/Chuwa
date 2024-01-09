@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import { CardContent,CardMedia, Typography,CardActionArea,IconButton} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -8,6 +8,9 @@ import { Button,Stack } from '@mui/material';
 import "./productCard.css"
 import AddProduct from "./AddProduct";
 import { useAuth } from "../firebase/AuthContext";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart, calculateTotalPrice, decrementCartItem, incrementCartItem } from '../auth/cartAction';
+
 
 
 
@@ -17,7 +20,7 @@ const ProductCard = (props) =>{
     const [count, setCount] = React.useState(props.selected);
     const [open, setOpen] = useState(false);
     const {user} = useAuth();
-
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
     const handleIncrement = async () => {
@@ -31,22 +34,7 @@ const ProductCard = (props) =>{
         };
         const userId = user.id;
         try{
-            //这个API待定，等购物车功能实现
-            // const resp = await fetch('http://localhost:3000/api/user',{
-            //     method: 'POST',
-            //     headers:{
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body:JSON.stringify({userId: userId, productId: props.productId})
-            // });
-            // if(!resp.ok) throw new Error(resp.statusText);
-            await fetch('http://localhost:3000/api/Cart', {
-              method: 'POST',
-              body: JSON.stringify({userId, productInfo}),
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-            });
+            await dispatch(incrementCartItem(userId, productInfo));
         }catch(err) {
             console.log(err);
         }
@@ -59,8 +47,22 @@ const ProductCard = (props) =>{
     const handleClose = () => {
         setOpen(false);
     };
-    const handleDecrement = () => {
+
+    const handleDecrement = async () => {
         if(count>0) setCount(count-1);
+        const productInfo = {
+            productId: props.productId,
+            name: props.name,
+            image: props.image,
+            price: props.price,
+          };
+        const userId = user.id;
+        try{
+            await dispatch(decrementCartItem(userId, productInfo));
+        }catch(err){
+            console.log(err);
+        }
+        
 
     };
 

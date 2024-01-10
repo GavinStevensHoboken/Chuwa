@@ -28,6 +28,18 @@ const ProductCard = (props) =>{
         }
     }, [user, isUpdate]);
 
+    useEffect(() => {
+        if(cart && cart.items){
+            //Synchronize quantity in products page when edit in cart
+            const item = cart.items.find((item) => {
+                return item.productId === props.productId;
+            }
+                );
+            item ? setCount(item.quantity) : setCount(0);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [cart])
+
     const handleIncrement = async () => {
         setCount(count+1);
         

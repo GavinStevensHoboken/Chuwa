@@ -68,21 +68,36 @@ const AddProduct = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
+          let uploadUrl;
+          if(filePath.slice(0,4) === 'http'){
+            uploadUrl = filePath;
+          }else{
             const storageRef = ref(storage, filename);
 
             const img = await uploadBytes(storageRef, upload);
-            const uploadUrl = await getDownloadURL(img.ref);
-
-            const resp = await fetch('http://localhost:3000/api/products',{
+            uploadUrl = await getDownloadURL(img.ref);
+          }
+          let resp
+          if(props.entry === 'add'){
+                resp = await fetch('http://localhost:3000/api/products',{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',
                 },
                 body:JSON.stringify({...productData,image: uploadUrl})
             });
-            if(!resp.ok) throw new Error("Please fulfill all blanks");
+          }else{
+                resp = await fetch('http://localhost:3000/api/products/'+props.productId,{
+                method: 'put',
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify({...productData,image: uploadUrl})
+                })
+        }
+          if(!resp.ok) throw new Error("Please fulfill all blanks");
             //toast Success
-            handleClose();
+          handleClose();
 
         }catch(err) {
             setError(err);

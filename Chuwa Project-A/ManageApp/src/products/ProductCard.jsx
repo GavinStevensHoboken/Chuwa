@@ -20,6 +20,7 @@ const ProductCard = (props) =>{
     const cart = useSelector(state => state.cart.items);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [entrypoint, setEntrypoint] = useState('');
 
     useEffect(() => {
         if (user) {
@@ -60,6 +61,7 @@ const ProductCard = (props) =>{
 
     const handleClickOpen = () => {
         setOpen(true);
+        setEntrypoint('edit');
     };
 
     const handleClose = () => {
@@ -138,6 +140,7 @@ const ProductCard = (props) =>{
                         price={props.price}
                         image={props.image}
                         productId={props.productId}
+                        entry={entrypoint}
                     />
 
         </Card>

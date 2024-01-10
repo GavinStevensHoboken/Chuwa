@@ -23,6 +23,7 @@ const Products = () => {
     const [pageNum, setPageNum] = useState(1);
     const [pages, setPages] = useState(0);
     const [effect, setEffect] = useState(undefined)
+    const [entrypoint, setEntrypoint] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -59,6 +60,7 @@ const Products = () => {
     }
     const handleClickOpen = () => {
         setOpen(true);
+        setEntrypoint('add');
     };
 
     const handleClose = () => {
@@ -91,7 +93,7 @@ const Products = () => {
                 </Button>
               )}
             </div>
-            <AddProduct open={open} onClose={handleClose} />
+            <AddProduct open={open} onClose={handleClose} entry={entrypoint}/>
 
             <Box sx={{ flexGrow: 1, margin: "15px" }}>
               <Grid

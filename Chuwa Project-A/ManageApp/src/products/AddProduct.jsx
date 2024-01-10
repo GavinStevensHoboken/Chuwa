@@ -13,7 +13,7 @@ const AddProduct = (props) => {
     const fileInputRef = useRef(null);
     const [filePath, setFilePath] = useState(props.image);
     const [filename, setFilename] = useState('');
-    const [imageUrl, setImageUrl] = useState(null);
+    const [imageUrl, setImageUrl] = useState(props.image);
     const [upload, setUpload] = useState(undefined);
     const [openToast, setOpenToast] = useState(false);
     const [productData, setProductData] = useState({
@@ -81,7 +81,8 @@ const AddProduct = (props) => {
                 body:JSON.stringify({...productData,image: uploadUrl})
             });
             if(!resp.ok) throw new Error("Please fulfill all blanks");
-
+            //toast Success
+            handleClose();
 
         }catch(err) {
             setError(err);

@@ -9,6 +9,7 @@ import Footer from './footer/Footer';
 import Confirmation from './reset password/confirmation';
 import Cart from './products/Cart'
 import ProductDetails from './products/ProductDetails'
+import NotFound from './NotFound';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                         <Route path="/resetPassword" element={<ResetPassword/>}/>
                         <Route path="/confirmation" element={<Confirmation/>}/>
                         <Route path="/productDetails/:productId" element={<ProductDetails/>}/>
+                        <Route path="*" element={<NotFound/>}/>
                     </Routes>
                     <Footer/>
                 </div>

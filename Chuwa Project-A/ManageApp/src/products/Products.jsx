@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import { useAuth } from "../firebase/AuthContext";
+import { useHeader } from "../header/HeaderContext";
 import DropDown from './DropDown';
 import {Button, Box} from "@mui/material";
 import ProductCard from "./ProductCard";
@@ -13,10 +14,12 @@ import Stack from '@mui/material/Stack';
 
 const Products = () => {
     const [data, setData] = useState([]);
+    const [searchedData, setSearchedData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [open, setOpen] = useState(false);
     const {user} = useAuth();
+    const {search} = useHeader();
     const [pageNum, setPageNum] = useState(1);
     const [pages, setPages] = useState(0);
     const [effect, setEffect] = useState(undefined)
@@ -29,7 +32,7 @@ const Products = () => {
                     const result = await res.json();
                     setData(result);
                     setLoading(false);
-                    setPages(Math.ceil(result.length / 8));
+                    
                 } catch (err) {
                     setError(err);
                 }
@@ -39,6 +42,17 @@ const Products = () => {
 
         fetchData();
     }, [effect,user]);
+
+    useEffect(() => {
+        let result;
+        if(search && data.length != 0){
+            result = data.filter((item) => item.name.includes(search));
+        }else{
+            result = data;
+        }
+        setSearchedData(result);
+        setPages(Math.ceil(result.length / 8));
+    }, [data, search]);
 
     const handleChange = (e ,value) => {
         setPageNum(value);
@@ -85,7 +99,7 @@ const Products = () => {
                 spacing={{ xs: 2, md: 3 }}
                 columns={{ xs: 4, sm: 8, md: 12 }}
               >
-                {data.slice((pageNum-1)*8,pageNum*8).map((item, idx) => (
+                {searchedData.slice((pageNum-1)*8,pageNum*8).map((item, idx) => (
                   <ProductCard
                     key={idx}
                     productId={item._id}

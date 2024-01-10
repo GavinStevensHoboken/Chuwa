@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useAuth} from '../firebase/AuthContext';
+import { useHeader } from './HeaderContext';
 import './Header.css';
 import Cart from '../products/SidebarCart';
 
@@ -9,6 +10,7 @@ function Header() {
     const {setUser, user} = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const {setSearch} = useHeader();
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
@@ -22,10 +24,16 @@ function Header() {
         navigate('/login');
 
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setSearch(searchTerm);
+    }
+
     return (
         <header className="header">
             <h1>Management</h1>
-            <form className="search-class" action="/search" method="GET">
+            <form className="search-class" onSubmit={handleSubmit}>
                 <input
                     type="search"
                     placeholder="Search"

@@ -110,6 +110,7 @@ const Products = () => {
                     detail={2}
                     selected={item.selected}
                     image={item.image}
+                    quantity={item.quantity}
                   />
                 ))}
               </Grid>

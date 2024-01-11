@@ -41,6 +41,54 @@ const ProductCard = (props) =>{
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cart])
 
+    const AddComponent = ({count, quantity}) => {
+        let context;
+        if(count){
+            context = (<Stack direction="row" spacing={10} justifyContent="space-between">
+            <div style={{ display: 'flex',alignItems: 'center', margin:'0.7px'}}>
+                <IconButton onClick={handleDecrement} style={{ backgroundColor: '#007BFF', color: 'white',margin: '2px' }}>
+                    <RemoveIcon />
+                </IconButton>
+                <Typography variant="body1">{count}</Typography>
+                <IconButton onClick={handleIncrement} style={{ backgroundColor: '#007BFF', color: 'white',margin:'2px' }}>
+                    <AddIcon />
+                </IconButton>
+            </div>
+            <div>
+            {user && user.vendor && <Button variant="contained" onClick={handleClickOpen} style={{margin:'3px' }}>Edit </Button>}
+            </div>
+        </Stack>)
+        }else if(quantity === 0){
+            context = (
+              <Stack
+                direction="row"
+                spacing={10}
+                justifyContent="space-between"
+                alignItems="center"
+              > 
+                  <p>out of stock</p>
+                  {user && user.vendor && (
+                    <Button
+                      variant="contained"
+                      onClick={handleClickOpen}
+                      style={{ margin: "3px" }}
+                    >
+                      Edit
+                    </Button>
+                  )}
+              </Stack>
+            );
+        }else{
+            context = (
+                <Stack direction="row" spacing={10} justifyContent="space-between">
+                    <Button variant="contained" onClick={handleIncrement} style={{margin:'4px'}}>Add</Button>
+                    {user && user.vendor && <Button variant="contained" onClick={handleClickOpen} style={{margin:'4px'}}>Edit </Button>}
+                </Stack>
+            )
+        }
+        return context;
+    }
+
     const handleIncrement = async () => {
         setCount(count+1);
         
@@ -110,7 +158,8 @@ const ProductCard = (props) =>{
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            {count ? (
+            <AddComponent count={count} quantity={props.quantity}/>
+            {/* {count ? (
                 <Stack direction="row" spacing={10} justifyContent="space-between">
                     <div style={{ display: 'flex',alignItems: 'center', margin:'0.7px'}}>
                         <IconButton onClick={handleDecrement} style={{ backgroundColor: '#007BFF', color: 'white',margin: '2px' }}>
@@ -131,7 +180,7 @@ const ProductCard = (props) =>{
                     {user && user.vendor && <Button variant="contained" onClick={handleClickOpen} style={{margin:'4px'}}>Edit </Button>}
                 </Stack>
 
-            ) }
+            ) } */}
             <AddProduct
                         open={open}
                         onClose={handleClose}

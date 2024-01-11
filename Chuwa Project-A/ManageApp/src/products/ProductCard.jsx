@@ -9,7 +9,7 @@ import "./productCard.css"
 import AddProduct from "./AddProduct";
 import { useAuth } from "../firebase/AuthContext";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart, calculateTotalPrice, decrementCartItem, incrementCartItem } from '../auth/cartAction';
+import { fetchCart, calculateTotalPrice, decrementCartItem, incrementCartItem } from '../redux/cartAction';
 import { useNavigate } from 'react-router-dom';
 
 const ProductCard = (props) =>{

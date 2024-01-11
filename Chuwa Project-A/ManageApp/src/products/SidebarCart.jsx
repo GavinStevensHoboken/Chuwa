@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAuth } from '../firebase/AuthContext';
-import { fetchCart, decrementCartItem, incrementCartItem } from '../auth/cartAction';
+import { fetchCart, decrementCartItem, incrementCartItem } from '../redux/cartAction';
 import { useNavigate } from 'react-router-dom';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';

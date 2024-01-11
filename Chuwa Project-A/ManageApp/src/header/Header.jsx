@@ -32,7 +32,7 @@ function Header() {
 
     return (
         <header className="header">
-            <h1>Management</h1>
+            <a href='/products'>Management</a>
             <form className="search-class" onSubmit={handleSubmit}>
                 <input
                     type="search"
@@ -51,7 +51,6 @@ function Header() {
                 </button>
                 {user ? `${user.email}, ${user.vendor ? 'vendor' : 'regular'}` : ''}
 
-                {/* <a href="/cart">Cart</a> */}
                 <button onClick={toggleCart}>Cart</button>
                 <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
             </nav>

@@ -78,6 +78,10 @@
     margin-top: 20px;
 }
 
+.sign-up-button:hover {
+    background-color: #545ef3;
+}
+
 .sign-up-options {
     display: flex;
     justify-content: space-between;

@@ -72,20 +72,8 @@
     background-color: #0056b3;
 }
 
-.loading {
-    font-size: 20px;
-    color: #000;
-    text-align: center;
-    animation: spin 2s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
 .total-price {
-    flex: 0.3; /* 总价区域相对较小 */
+    flex: 0.3; 
     border: 1px solid #ddd;
     padding: 20px;
     gap: 20px;
@@ -95,11 +83,10 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
 }
 
 .total-price p {
-    /* margin: 10px 0; */
+    
     font-size: 16px;
     color: #333;
 }
@@ -114,7 +101,7 @@
     font-size: 18px;
     font-weight: bold;
     text-align: center;
-    display: block; /* 占据整行 */
+    display: block;
     margin-top: 20px;
 }
 

@@ -17,12 +17,10 @@ function Login() {
     }
 
     useEffect(() => {
-        if(user && user.vendor){
-            navigate('/main_vendor');
-        }else if(user){
-            navigate('/main_regular');
+        if(user){
+            navigate('/products');
         }
-    }, [user]); // 依赖项数组，这里只有user
+    }, [user]);
 
     const HandleSubmit = async (event) => {
         event.preventDefault();

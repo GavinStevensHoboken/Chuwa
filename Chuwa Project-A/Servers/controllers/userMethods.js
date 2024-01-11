@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Product = require('../models/Product');
 const jwt = require('jsonwebtoken');
 
 const SignUp = async (req, res) => {
@@ -53,10 +54,22 @@ const Login = async (req, res) => {
 const UserCart = async (req, res) => {
     try {
         const { userId, productInfo } = req.body;
+        const product = await Product.findById(productInfo.productId);
+
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // check if there are products left
+        if (product.quantity <= 0) {
+            return res.status(400).json({ message: 'Product is out of stock' }); 
+        }
 
         const user = await User.findById(userId);
         const cart = user.cart;
         const existingProductIndex = cart.items.findIndex(item => item.productId === productInfo.productId);
+
+        product.quantity = Math.max(product.quantity - 1, 0);
         
         if (existingProductIndex > -1) {
             cart.items[existingProductIndex].quantity += 1;
@@ -65,7 +78,9 @@ const UserCart = async (req, res) => {
         }
 
         await user.save();
+        await product.save();
 
+        console.log(product.quantity);
         res.json({ message: 'Product added to cart', cart: user.cart });
     } catch (err) {
         console.error(err.message);
@@ -76,10 +91,14 @@ const UserCart = async (req, res) => {
 const decrementCart = async (req, res) => {
     try {
         const { userId, productInfo } = req.body;
-        
+        const product = await Product.findById(productInfo.productId);
+
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
         const user = await User.findById(userId);
         const cart = user.cart;
-
         const existingProductIndex = cart.items.findIndex(item => item.productId === productInfo.productId);
         
         if (existingProductIndex > -1) {
@@ -91,9 +110,13 @@ const decrementCart = async (req, res) => {
                 cart.items.splice(existingProductIndex, 1);
             }
         }
+
+        product.quantity += 1;
     
         await user.save();
-    
+        await product.save();
+        
+        console.log(product.quantity);
         res.json({ message: 'Product quantity decremented', cart: user.cart });
     } catch (err) {
         console.error(err.message);

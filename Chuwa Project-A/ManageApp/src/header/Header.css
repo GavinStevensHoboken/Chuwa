@@ -7,7 +7,9 @@ header {
     align-items: center; /* Center items vertically */
 }
   
-header h1 {
+header a {
+    color: white;
+    text-decoration: none;
     margin: 0; 
     font-size: 1.5rem; 
 }
@@ -65,7 +67,9 @@ header nav button:hover {
 }
 
 @media (max-width: 600px) {
-    header h1 {
+    header a {
+        color: white;
+        text-decoration: none;
         margin: 0; 
         font-size: 1rem; 
     }

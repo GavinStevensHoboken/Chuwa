@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../firebase/AuthContext';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCart, decrementCartItem, incrementCartItem, calculateTotalPrice } from '../auth/cartAction';
+import { fetchCart, decrementCartItem, incrementCartItem, calculateTotalPrice } from '../redux/cartAction';
 import "./Cart.css";
 
 

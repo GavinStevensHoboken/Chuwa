@@ -30,7 +30,7 @@ header a {
 }
 
 .search-class button{
-    right: 0;
+    right: 20px;
     padding: 15px;
     top: 50%;
     transform: translateY(-50%);

@@ -12,7 +12,6 @@ function Header() {
     const {setUser, user} = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const discountApplied = useSelector(state => state.cart.isDiscountApplied)
     const {setSearch} = useHeader();
     const dispatch = useDispatch();
 

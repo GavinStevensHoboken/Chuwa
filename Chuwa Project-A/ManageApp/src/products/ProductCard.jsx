@@ -30,6 +30,10 @@ const ProductCard = (props) =>{
     }, [user, isUpdate]);
 
     useEffect(() => {
+        setCount(props.selected);
+    },[props])
+
+    useEffect(() => {
         if(cart && cart.items){
             //Synchronize quantity in products page when edit in cart
             const item = cart.items.find((item) => {

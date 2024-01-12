@@ -79,9 +79,9 @@ function Cart() {
                         <input className="promo-code" type="text" onChange={(e) => handlePromoCode(e)} placeholder='Please enter promotion code here'/>
                         <button onClick={handleCheckPromoCode}>Apply</button>
                         <p>Subtotal: ${subTotal}</p>
-                        <p>Tax: ${tax}</p>
+                        <p>Tax: ${tax.toFixed(2)}</p>
                         <p>Discount: -${discount}</p>
-                        <p>Total: ${total}</p>
+                        <p>Total: ${total.toFixed(2)}</p>
                         <button className="checkout-button">Check out</button>
                     
                 </div>

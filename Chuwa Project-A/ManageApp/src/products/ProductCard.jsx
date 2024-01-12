@@ -131,8 +131,6 @@ const ProductCard = (props) =>{
         }catch(err){
             console.log(err);
         }
-        
-
     };
 
 

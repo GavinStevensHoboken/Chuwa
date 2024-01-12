@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useState, useRef, useEffect } from 'react';
+import {useAuth} from '../firebase/AuthContext';
+import {useSelector, useDispatch} from 'react-redux';
 import { ref, uploadBytes, getDownloadURL} from 'firebase/storage';
 import {storage} from '../firebase/Firebase';
 import PropTypes from 'prop-types';
@@ -7,21 +9,26 @@ import {Box, FormControl, Input, InputLabel,
     Button, Dialog, DialogTitle, Grid, 
     TextField,InputAdornment, Alert, Snackbar} from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import {decrementCartItem,fetchCart} from '../redux/cartAction';
 
 
 const AddProduct = (props) => {
     const fileInputRef = useRef(null);
+    const cart = useSelector(state => state.cart.items);
+    const dispatch = useDispatch();
+    const {user} = useAuth();
     const [filePath, setFilePath] = useState(props.image);
     const [filename, setFilename] = useState('');
     const [imageUrl, setImageUrl] = useState(props.image);
     const [upload, setUpload] = useState(undefined);
     const [openToast, setOpenToast] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
     const [productData, setProductData] = useState({
         name:props.name,
-        category:'',
+        category:props.category,
         detail:props.detail,
         price:props.price,
-        quantity:'',
+        quantity:props.quantity,
         image:props.image
     })
     const [error, setError] = useState('');
@@ -31,6 +38,13 @@ const AddProduct = (props) => {
           setImageUrl(filePath);
         }
       }, [filePath]);
+
+      useEffect(() => {
+        if (user) {
+            const userId = user.id;
+            dispatch(fetchCart(userId));
+        }
+    }, [user, isUpdate]);
 
 
     const handleButtonClick = () => {
@@ -96,9 +110,37 @@ const AddProduct = (props) => {
                 })
         }
           if(!resp.ok) throw new Error("Please fulfill all blanks");
+          if(props.entry == 'add') {
+            let result = await resp.json();
+            props.setData((prev) => ([...prev,{...productData,image: uploadUrl, productId:result.id}]))
+          }
             //toast Success
+          
           handleClose();
 
+        }catch(err) {
+            setError(err);
+            setOpenToast(true);
+        }
+    }
+
+    const handleDelete = async (e) => {
+      e.preventDefault();
+      let itemInfo = {...productData, quantity:0,productId:props.productId};
+        try{
+            await dispatch(decrementCartItem(user.id,itemInfo));
+            setIsUpdate(!isUpdate);
+            let resp = await fetch('http://localhost:3000/api/products/'+ props.productId,{
+            method: 'DELETE',
+            headers:{
+                'Content-Type': 'application/json',
+            }
+            });
+            if(!resp.ok) throw new Error("Fail to delete ");
+            props.setData((prev) => (prev.filter(item => item._id != props.productId)))
+            
+            //toast Success
+            handleClose();
         }catch(err) {
             setError(err);
             setOpenToast(true);
@@ -176,6 +218,7 @@ const AddProduct = (props) => {
                 <TextField 
                     id="category"
                     name="category"
+                    value={productData.category}
                     onChange={handleInputChange}
                 ></TextField>
               </FormControl>
@@ -199,6 +242,7 @@ const AddProduct = (props) => {
                 <TextField 
                     id="stockQuantity"
                     name="quantity"
+                    value={productData.quantity}
                     onChange={handleInputChange}
                 ></TextField>
               </FormControl>
@@ -208,7 +252,7 @@ const AddProduct = (props) => {
               <FormControl variant="standard">
                 <label htmlFor="imageLink">Add Image Link</label>
                 <TextField
-                  label="File Path"
+                  label={filePath? "" : "FilePath"}
                   value={filePath}
                   name="image"
                   onChange={(e) => {
@@ -251,6 +295,9 @@ const AddProduct = (props) => {
           <Button type="submit" variant="contained" onClick={handleSubmit}>
             Add Product
           </Button>
+          {props.delete && <Button type="submit" variant="contained" onClick={handleDelete}>
+            Delete
+          </Button>}
         </Box>
       </Dialog>
     );

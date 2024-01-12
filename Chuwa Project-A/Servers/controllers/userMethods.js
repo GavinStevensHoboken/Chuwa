@@ -101,14 +101,17 @@ const decrementCart = async (req, res) => {
         const cart = user.cart;
         const existingProductIndex = cart.items.findIndex(item => item.productId === productInfo.productId);
         
-        if (existingProductIndex > -1) {
-            // Decrement
-            cart.items[existingProductIndex].quantity -= 1;
-    
-            // remove if there is none left
-            if (cart.items[existingProductIndex].quantity === 0) {
-                cart.items.splice(existingProductIndex, 1);
-            }
+        if(productInfo.quantity === 0) {
+            //这个是Edit删除产品时加的，如果传入的quantity为0，购物车就删它
+            cart.items.splice(existingProductIndex, 1);
+        }else if (existingProductIndex > -1) {
+                // Decrement
+                cart.items[existingProductIndex].quantity -= 1;
+        
+                // remove if there is none left
+                if (cart.items[existingProductIndex].quantity === 0) {
+                    cart.items.splice(existingProductIndex, 1);
+                }
         }
 
         product.quantity += 1;

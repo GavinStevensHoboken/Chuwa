@@ -3,10 +3,11 @@ const User = require('../models/User');
 
 const creatProduct = async (req, res) => {
     try{
+        let item;
         const productInfo = {...req.body};
         const product = new Product(productInfo);
-        await product.save();
-        res.json({message: 'Created successful!'})
+        item = await product.save();
+        res.json({message: 'Created successful!', id:item._id})
     }catch (err) {
         console.error(err.message);
         res.status(500).json({message: 'Server Error'});
@@ -63,6 +64,19 @@ const updateProduct = async (req, res) => {
         res.status(500).json({message: 'Server Error'});
     }
 }
+
+const deleteProduct = async (req, res) => {
+    try{
+        const productId = req.params.id;
+        let result = await Product.findByIdAndDelete(productId);
+        if(!result) throw "Error";
+        res.json({message: 'Deleted succesfully'})
+    }catch (err) {
+        console.error(err.message);
+        res.status(500).json({message: 'Server Error'});
+    }
+}
+
 const getProductById = async (req, res) => {
     try {
         const productId = req.params.id;
@@ -80,6 +94,7 @@ module.exports = {
     creatProduct,
     getAllProducts,
     updateProduct,
+    deleteProduct,
     getProductById,
     getProductsByUserId
 }

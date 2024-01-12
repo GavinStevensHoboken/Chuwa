@@ -93,7 +93,7 @@ const Products = () => {
                 </Button>
               )}
             </div>
-            <AddProduct open={open} onClose={handleClose} entry={entrypoint}/>
+            <AddProduct open={open} onClose={handleClose} entry={entrypoint} setData={setData}/>
 
             <Box sx={{ flexGrow: 1, margin: "15px" }}>
               <Grid
@@ -111,6 +111,8 @@ const Products = () => {
                     selected={item.selected}
                     image={item.image}
                     quantity={item.quantity}
+                    category={item.category}
+                    setData={setData}
                   />
                 ))}
               </Grid>

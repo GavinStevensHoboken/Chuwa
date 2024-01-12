@@ -159,28 +159,6 @@ const ProductCard = (props) =>{
                 </CardContent>
             </CardActionArea>
             <AddComponent count={count} quantity={props.quantity}/>
-            {/* {count ? (
-                <Stack direction="row" spacing={10} justifyContent="space-between">
-                    <div style={{ display: 'flex',alignItems: 'center', margin:'0.7px'}}>
-                        <IconButton onClick={handleDecrement} style={{ backgroundColor: '#007BFF', color: 'white',margin: '2px' }}>
-                            <RemoveIcon />
-                        </IconButton>
-                        <Typography variant="body1">{count}</Typography>
-                        <IconButton onClick={handleIncrement} style={{ backgroundColor: '#007BFF', color: 'white',margin:'2px' }}>
-                            <AddIcon />
-                        </IconButton>
-                    </div>
-                    <div>
-                    {user && user.vendor && <Button variant="contained" onClick={handleClickOpen} style={{margin:'3px' }}>Edit </Button>}
-                    </div>
-                </Stack>
-            ):(
-                <Stack direction="row" spacing={10} justifyContent="space-between">
-                    <Button variant="contained" onClick={handleIncrement} style={{margin:'4px'}}>Add</Button>
-                    {user && user.vendor && <Button variant="contained" onClick={handleClickOpen} style={{margin:'4px'}}>Edit </Button>}
-                </Stack>
-
-            ) } */}
             <AddProduct
                         open={open}
                         onClose={handleClose}
@@ -190,6 +168,10 @@ const ProductCard = (props) =>{
                         image={props.image}
                         productId={props.productId}
                         entry={entrypoint}
+                        quantity={props.quantity}
+                        category={props.category}
+                        delete={'display'}
+                        setData={props.setData}
                     />
 
         </Card>

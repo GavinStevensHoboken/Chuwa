@@ -108,6 +108,16 @@ const AddProduct = (props) => {
                 },
                 body:JSON.stringify({...productData,image: uploadUrl})
                 })
+                props.setData(prev => prev.map( item => {
+                  return(
+                  item._id === props.productId ? 
+                  {...item,
+                  name:productData.name,
+                  detail:productData.detail,
+                  price:productData.price,
+                  image:productData.image,
+                  category:productData.category}:item)
+                }))
         }
           if(!resp.ok) throw new Error("Please fulfill all blanks");
           if(props.entry == 'add') {

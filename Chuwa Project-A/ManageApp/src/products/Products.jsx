@@ -107,7 +107,7 @@ const Products = () => {
                     productId={item._id}
                     name={item.name}
                     price={item.price}
-                    detail={2}
+                    detail={item.detail}
                     selected={item.selected}
                     image={item.image}
                     quantity={item.quantity}

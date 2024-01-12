@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../firebase/AuthContext';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCart, decrementCartItem, incrementCartItem, calculateTotalPrice } from '../redux/cartAction';
+import { fetchCart, decrementCartItem, incrementCartItem, setDiscountApplied } from '../redux/cartAction';
 import "./Cart.css";
 
 
@@ -12,8 +12,10 @@ function Cart() {
     const {user, setUser} = useAuth();
     const dispatch = useDispatch();
     const [isUpdate, setUpdate] = useState(false);
+    const [promoCode, setPromoCode] = useState('');
+    const discountApplied = useSelector(state => state.cart.isDiscountApplied)
     const tax = subTotal*0.01;
-    const discount = 10;
+    const discount = discountApplied ? 10 : 0;
     const total = subTotal+tax-discount;
     
     useEffect( () => {
@@ -33,6 +35,19 @@ function Cart() {
         const userId = user.id;
         await dispatch(incrementCartItem(userId, itemInfo));
         setUpdate(!isUpdate);
+    }
+
+    const handlePromoCode = (e) => {
+        setPromoCode(e.target.value);
+    }
+
+    const handleCheckPromoCode = () => {
+        if (promoCode === 'DISCOUNT') {
+            dispatch(setDiscountApplied(true));
+        } else {
+            dispatch(setDiscountApplied(false));
+            alert('Invalid Promotion Code!');
+        }
     }
 
     return (
@@ -61,7 +76,8 @@ function Cart() {
                     }
                 </div>
                 <div className='total-price'>
-                    
+                        <input className="promo-code" type="text" value={promoCode} onChange={(e) => handlePromoCode(e)} placeholder='Please enter promotion code here'/>
+                        <button onClick={handleCheckPromoCode}>Apply</button>
                         <p>Subtotal: ${subTotal}</p>
                         <p>Tax: ${tax}</p>
                         <p>Discount: ${discount}</p>

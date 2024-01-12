@@ -80,7 +80,6 @@ const UserCart = async (req, res) => {
         await user.save();
         await product.save();
 
-        console.log(product.quantity);
         res.json({ message: 'Product added to cart', cart: user.cart });
     } catch (err) {
         console.error(err.message);
@@ -119,7 +118,6 @@ const decrementCart = async (req, res) => {
         await user.save();
         await product.save();
         
-        console.log(product.quantity);
         res.json({ message: 'Product quantity decremented', cart: user.cart });
     } catch (err) {
         console.error(err.message);
@@ -132,6 +130,15 @@ const FindCart = async (req, res) => {
         const userId = req.params.id;
         const user = await User.findById(userId);
         if (user){
+            for (let i = user.cart.items.length - 1; i >= 0; i--) {
+                const item = user.cart.items[i];
+                const product = await Product.findById(item.productId);
+
+                if (!product) {
+                    user.cart.items.splice(i, 1);
+                }
+            }
+            await user.save();
             res.json(user.cart);
         }else{
             res.status(404).json({ message: 'User not found' });

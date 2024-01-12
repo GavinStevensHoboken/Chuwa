@@ -40,6 +40,19 @@ const AddProduct = (props) => {
       }, [filePath]);
 
       useEffect(() => {
+        setProductData({
+          name:props.name,
+          category:props.category,
+          detail:props.detail,
+          price:props.price,
+          quantity:props.quantity,
+          image:props.image
+        });
+        setFilePath(props.image);
+      }, [props]);
+      
+
+      useEffect(() => {
         if (user) {
             const userId = user.id;
             dispatch(fetchCart(userId));
@@ -122,7 +135,7 @@ const AddProduct = (props) => {
           if(!resp.ok) throw new Error("Please fulfill all blanks");
           if(props.entry == 'add') {
             let result = await resp.json();
-            props.setData((prev) => ([...prev,{...productData,image: uploadUrl, productId:result.id}]))
+            props.setData((prev) => ([...prev,{...productData,image: uploadUrl, _id:result.id,selected:0}]))
           }
             //toast Success
           

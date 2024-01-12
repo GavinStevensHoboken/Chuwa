@@ -11,14 +11,14 @@ import Confirmation from './reset password/confirmation';
 import Cart from './products/Cart'
 import ProductDetails from './products/ProductDetails'
 import NotFound from './NotFound';
-
+import './App.css';
 function App() {
 
     return (
       <Router>
         <AuthProvider>
           <HeaderProvider>
-            <div>
+            <body>
               <Header />
               <Routes>
                 <Route path="/cart" element={<Cart />} />
@@ -34,7 +34,8 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <Footer />
-            </div>
+            </body>
+            
           </HeaderProvider>
         </AuthProvider>
       </Router>

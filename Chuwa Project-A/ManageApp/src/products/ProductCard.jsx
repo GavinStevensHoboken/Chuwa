@@ -43,6 +43,7 @@ const ProductCard = (props) =>{
 
     const AddComponent = ({count, quantity}) => {
         let context;
+        // count is how many selected
         if(count){
             context = (<Stack direction="row" spacing={10} justifyContent="space-between">
             <div style={{ display: 'flex',alignItems: 'center', margin:'0.7px'}}>
@@ -148,8 +149,12 @@ const ProductCard = (props) =>{
                     className='image-item'
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {props.name + ' ' + props.detail}
+                    <Typography gutterBottom 
+                    variant="h5" 
+                    component="div" 
+                    style={{ overflow: 'hidden',textOverflow: 'ellipsis',whiteSpace: 'nowrap',}}
+                    >
+                        {props.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" fontWeight="bold">
                         {'$'+props.price}

@@ -60,3 +60,10 @@ export const calculateTotalPrice = (cartItems) => {
         dispatch({ type: 'CALCULATE_TOTAL_PRICE', payload: totalPrice });
     }
 };
+
+export const setDiscountApplied = (isApplied) => {
+    return {
+        type: 'SET_DISCOUNT_APPLIED',
+        payload: isApplied
+    }
+};

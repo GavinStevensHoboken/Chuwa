@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAuth } from '../firebase/AuthContext';
-import { fetchCart, decrementCartItem, incrementCartItem } from '../redux/cartAction';
+import { fetchCart, decrementCartItem, incrementCartItem, setDiscountApplied } from '../redux/cartAction';
 import { useNavigate } from 'react-router-dom';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -12,6 +12,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import './SidebarCart.css'
 
 
 function SideBarCart({ isCartOpen, toggleCart }) {
@@ -21,8 +22,10 @@ function SideBarCart({ isCartOpen, toggleCart }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isUpdate, setIsUpdate] = useState(false);
+    const discountApplied = useSelector(state => state.cart.isDiscountApplied)
+    const [promoCode, setPromoCode] = useState('');
     const tax = subTotal * 0.01;
-    const discount = 10;
+    const discount = discountApplied ? 10 : 0;
     const total = subTotal + tax - discount;
 
     useEffect(() => {
@@ -44,8 +47,21 @@ function SideBarCart({ isCartOpen, toggleCart }) {
         setIsUpdate(!isUpdate);
     };
 
-    const handleCartDetail = () => {
+    const handleCartDetail = (discountApplied) => {
         navigate('/cart')
+    }
+
+    const handlePromoCode = (e) => {
+        setPromoCode(e.target.value);
+    }
+
+    const handleCheckPromoCode = () => {
+        if (promoCode === 'DISCOUNT') {
+            dispatch(setDiscountApplied(true));
+        } else {
+            dispatch(setDiscountApplied(false));
+            alert('Invalid Promotion Code!');
+        }
     }
 
     return (
@@ -66,11 +82,11 @@ function SideBarCart({ isCartOpen, toggleCart }) {
                             <ListItemText primary={item.name} secondary={`Quantity: ${item.quantity} Price: $${item.price}`} />
                         </ListItem>
                     ))}
-                    <Button variant="contained" sx={{ mt: 2, width: '100%'}} onClick={handleCartDetail}>Show Cart Detail</Button>
+                    <Button variant="contained" sx={{ mt: 2, width: '100%'}} onClick={() => handleCartDetail(discountApplied)}>Show Cart Detail</Button>
                 </List>
-                
+                <input className="promo-code" type="text" onChange={(e) => handlePromoCode(e)} placeholder='Please enter promotion code here'/>
+                <Button variant="contained" sx={{ mt: 2, width: '100%'}} onClick={handleCheckPromoCode}>Apply</Button>
                 <Box sx={{ p: 2 }}>
-                    
                     <p>Subtotal: ${subTotal.toFixed(2)}</p>
                     <p>Tax: ${tax.toFixed(2)}</p>
                     <p>Discount: -${discount.toFixed(2)}</p>

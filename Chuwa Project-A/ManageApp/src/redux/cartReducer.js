@@ -1,6 +1,7 @@
 const initialState = {
     items: [],
-    totalPrice: 0
+    totalPrice: 0,
+    isDiscountApplied: false,
 };
 
 export const cartReducer = (state = initialState, action) => {
@@ -16,6 +17,11 @@ export const cartReducer = (state = initialState, action) => {
                 ...state,
                 totalPrice: action.payload
             };
+        case 'SET_DISCOUNT_APPLIED':
+            return{
+                ...state,
+                isDiscountApplied: action.payload
+            }
         default:
             return state;
     }

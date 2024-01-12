@@ -80,7 +80,7 @@ function Cart() {
                         <button onClick={handleCheckPromoCode}>Apply</button>
                         <p>Subtotal: ${subTotal}</p>
                         <p>Tax: ${tax}</p>
-                        <p>Discount: ${discount}</p>
+                        <p>Discount: -${discount}</p>
                         <p>Total: ${total}</p>
                         <button className="checkout-button">Check out</button>
                     

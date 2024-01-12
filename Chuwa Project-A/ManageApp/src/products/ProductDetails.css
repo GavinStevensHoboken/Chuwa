@@ -71,33 +71,33 @@
 .box .button-container {
     display: flex;
     gap: 10px;
+    align-items: center;
+    margin-top: 10px;
 }
 
 /* Shared styles for both buttons */
-.box .button-container .cart,
-.box .button-container .edit {
+.box .button-container button {
     color: white;
     outline: none;
     border: none;
     cursor: pointer;
     padding: 10px 25px;
+    border-radius: 5px;
     transition: background-color 0.3s;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .box .button-container .cart {
-    background: #333;
+    background: #007bff;
 }
 
 .box .button-container .edit {
-    background: #4CAF50;
+    background: #28a745;
 }
 
-.box .button-container .cart:hover {
-    background: #2c2c2c;
-}
-
-.box .button-container .edit:hover {
-    background: #46a049;
+.box .button-container button:hover {
+    opacity: 0.9;
 }
 
 .out-of-stock-label {
@@ -110,6 +110,41 @@
     display: inline-block;
     font-weight: bold;
 }
+.quantity-container {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 12px;
+}
+
+.quantity-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.quantity-container button:hover {
+    background-color: #0056b3;
+}
+
+
+.quantity-container span {
+    font-size: 14px;
+    margin: 0 8px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    padding: 8px 16px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
 
 @media (max-width: 768px){
     .details{

@@ -11,9 +11,19 @@ const ProductDetail = () => {
     const {user} = useAuth();
     const [products, setProducts] = useState(null);
 
-    //标识符 标志有没有fetch成功 成功才渲染add product组件的内容
     const [fetchedProducts, setFetchedProducts] = useState(null);
-
+    const [quantity, setQuantity] = useState(1);
+    const [isAddedToCart, setIsAddedToCart] = useState(false);
+    const handleQuantityChange = (newQuantity) => {
+        if (newQuantity < 1) {
+            newQuantity = 1;
+            setIsAddedToCart(false);
+        }
+        setQuantity(newQuantity);
+    };
+    const addToCart = () => {
+        setIsAddedToCart(true);
+    };
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -23,7 +33,6 @@ const ProductDetail = () => {
                 }
                 const data = await response.json();
                 setProducts(data);
-                console.log(data)
                 setFetchedProducts(1);
             } catch (error) {
                 console.log("Fetching product failed", error);
@@ -43,7 +52,6 @@ const ProductDetail = () => {
         setOpen(false);
     };
     return (
-
         <div className="app">
             {products &&(
             <div className="details" key={products._id}>
@@ -62,8 +70,17 @@ const ProductDetail = () => {
                         <div className="out-of-stock-label">Out of Stock</div>
                     )}
                     <p>{products.detail}</p>
+
+
                     <div className="button-container">
-                        <button className="cart">Add To Cart</button>
+                        {isAddedToCart ? (
+                        <div className="quantity-container">
+                            <button onClick={() => handleQuantityChange(quantity - 1)}>-</button>
+                            <span>{quantity}</span>
+                            <button onClick={() => handleQuantityChange(quantity + 1)}>+</button>
+                        </div>) :
+                            (<button className="cart" onClick={addToCart}>Add To Cart</button>)
+                        }
                         {user && user.vendor && (
                             <button className="edit"  onClick={handleClickOpen}>Edit</button>
                         )}

@@ -84,7 +84,7 @@ function SideBarCart({ isCartOpen, toggleCart }) {
                     ))}
                     <Button variant="contained" sx={{ mt: 2, width: '100%'}} onClick={() => handleCartDetail(discountApplied)}>Show Cart Detail</Button>
                 </List>
-                <input className="promo-code" type="text" value={promoCode} onChange={(e) => handlePromoCode(e)} placeholder='Please enter promotion code here'/>
+                <input className="promo-code" type="text" onChange={(e) => handlePromoCode(e)} placeholder='Please enter promotion code here'/>
                 <Button variant="contained" sx={{ mt: 2, width: '100%'}} onClick={handleCheckPromoCode}>Apply</Button>
                 <Box sx={{ p: 2 }}>
                     <p>Subtotal: ${subTotal.toFixed(2)}</p>

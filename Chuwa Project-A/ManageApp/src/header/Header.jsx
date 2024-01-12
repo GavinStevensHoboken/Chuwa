@@ -2,6 +2,8 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useAuth} from '../firebase/AuthContext';
 import { useHeader } from './HeaderContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { setDiscountApplied } from '../redux/cartAction';
 import './Header.css';
 import Cart from '../products/SidebarCart';
 
@@ -10,7 +12,9 @@ function Header() {
     const {setUser, user} = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const discountApplied = useSelector(state => state.cart.isDiscountApplied)
     const {setSearch} = useHeader();
+    const dispatch = useDispatch();
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
@@ -19,6 +23,7 @@ function Header() {
     const handleSign = () => {
         if (user) {
             document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            dispatch(setDiscountApplied(false));
             setUser(null);
         }
         navigate('/login');

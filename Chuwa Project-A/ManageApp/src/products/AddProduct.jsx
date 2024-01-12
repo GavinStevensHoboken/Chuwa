@@ -18,10 +18,10 @@ const AddProduct = (props) => {
     const [openToast, setOpenToast] = useState(false);
     const [productData, setProductData] = useState({
         name:props.name,
-        category:'',
+        category:props.category,
         detail:props.detail,
         price:props.price,
-        quantity:'',
+        quantity:props.quantity,
         image:props.image
     })
     const [error, setError] = useState('');
@@ -176,6 +176,7 @@ const AddProduct = (props) => {
                 <TextField 
                     id="category"
                     name="category"
+                    value={productData.category}
                     onChange={handleInputChange}
                 ></TextField>
               </FormControl>
@@ -199,6 +200,7 @@ const AddProduct = (props) => {
                 <TextField 
                     id="stockQuantity"
                     name="quantity"
+                    value={productData.quantity}
                     onChange={handleInputChange}
                 ></TextField>
               </FormControl>

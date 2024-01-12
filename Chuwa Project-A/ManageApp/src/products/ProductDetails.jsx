@@ -1,33 +1,18 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './ProductDetails.css';
 import {useParams} from 'react-router-dom';
+import { useAuth } from "../firebase/AuthContext";
+import AddProduct from "./AddProduct.jsx";
 
 
 const ProductDetail = () => {
     let {productId} = useParams();
-    const [products, setProducts] = useState([
-        {
-            "_id": "1",
-            "title": "Nike Dunk Low Men's Shoes",
-            "src": [
-                "https://m.media-amazon.com/images/I/51RFfemMaoL._AC_SY625_.jpg",
-                "https://m.media-amazon.com/images/I/71+r8r1p-HL._AC_SY625_.jpg",
-                // Add more images if available
-            ],
-            "description": "Classic look and new colors.",
-            "content": "The Nike Dunk Low Men's Shoe is a fresh rendition of a classic silhouette, featuring a comfortable fit, premium materials, and a durable outsole for lasting wear.",
-            "price": 167.00,
-            "colors": ["black", "blue"], // Use color names that match the product
-            "sizes": ["6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12"], // Assuming these are the available sizes
-            "material": {
-                "sole": "Rubber",
-                "outer": "Leather and Synthetic",
-            },
-            "style": "Modern",
-            "closureType": "Lace-Up",
-            "count": 1
-        }
-    ]);
+    const [open, setOpen] = useState(false);
+    const {user} = useAuth();
+    const [products, setProducts] = useState(null);
+
+    //标识符 标志有没有fetch成功 成功才渲染add product组件的内容
+    const [fetchedProducts, setFetchedProducts] = useState(null);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -38,6 +23,8 @@ const ProductDetail = () => {
                 }
                 const data = await response.json();
                 setProducts(data);
+                console.log(data)
+                setFetchedProducts(1);
             } catch (error) {
                 console.log("Fetching product failed", error);
             }
@@ -47,8 +34,18 @@ const ProductDetail = () => {
         }
     }, [productId]);
 
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
+
         <div className="app">
+            {products &&(
             <div className="details" key={products._id}>
                 <div className="big-img">
                     <img src={products.image} alt={products.name}/>
@@ -67,10 +64,24 @@ const ProductDetail = () => {
                     <p>{products.detail}</p>
                     <div className="button-container">
                         <button className="cart">Add To Cart</button>
-                        <button className="edit">Edit</button>
+                        {user && user.vendor && (
+                            <button className="edit"  onClick={handleClickOpen}>Edit</button>
+                        )}
                     </div>
                 </div>
+                <AddProduct
+                    open={open}
+                    onClose={handleClose}
+                    name={products.name}
+                    detail={products.detail}
+                    price={products.price}
+                    image={products.image}
+                    quantity={products.quantity}
+                    category={products.category}
+                    productId={products._id}
+                />
             </div>
+            )}
         </div>
     );
 };
